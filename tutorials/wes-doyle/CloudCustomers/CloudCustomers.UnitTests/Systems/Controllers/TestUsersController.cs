@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 
 using CloudCustomers.Api.Controllers;
-using CloudCustomers.Api.UseCases;
 using CloudCustomers.Api.Entities;
+using CloudCustomers.Api.UseCases;
+using CloudCustomers.UnitTests.Fixtures;
 
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace CloudCustomers.UnitTests;
+namespace CloudCustomers.UnitTests.Systems.Controllers;
 
 public class TestUsersController
 {
@@ -17,7 +18,7 @@ public class TestUsersController
     async void GetUsers_OnSucess_Returns200()
     {
         var mock = new Mock<IUserUseCases>();
-        mock.Setup(m => m.GetAllUsers().Result).Returns(new List<User>() { new User() { Name="John Doe" } });
+        mock.Setup(m => m.GetAllUsers().Result).Returns(UsersFixtures.GetListWith3Users());
         // Given
         var controller = new UsersController(mock.Object);
         // When
@@ -30,7 +31,7 @@ public class TestUsersController
     async void GetUsers_OnSuccess_InvokeUsersUseCases()
     {
         var mock = new Mock<IUserUseCases>();
-        mock.Setup(m => m.GetAllUsers().Result).Returns(new List<User>() { new User() { Name="John Doe" } });
+        mock.Setup(m => m.GetAllUsers().Result).Returns(UsersFixtures.GetListWith3Users());
         // Given
         var controller = new UsersController(mock.Object);
         // When
@@ -43,7 +44,7 @@ public class TestUsersController
     async void GetUsers_OnSuccess_GetListOfUsers()
     {
         var mock = new Mock<IUserUseCases>();
-        mock.Setup(m => m.GetAllUsers().Result).Returns(new List<User>() { new User() { Name="John Doe" } });
+        mock.Setup(m => m.GetAllUsers().Result).Returns(UsersFixtures.GetListWith3Users());
         // Given
         var controller = new UsersController(mock.Object);
         // When
