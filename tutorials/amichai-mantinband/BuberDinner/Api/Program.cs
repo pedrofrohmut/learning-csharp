@@ -1,6 +1,8 @@
+using BuberDinner.Api;
+
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
+AppBuilder.AddServices(builder);
 
 var app = builder.Build();
-app.MapControllers();
+RequestPipeline.Configure(app);
 app.Run();
