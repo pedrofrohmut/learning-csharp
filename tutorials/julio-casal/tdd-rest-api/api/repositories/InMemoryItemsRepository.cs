@@ -15,7 +15,25 @@ public class InMemoryItemsRepository : IItemsRepository
         };
     }
 
+
     public IEnumerable<Item> GetItems() => items;
 
     public Item? GetItem(Guid id) => items.Where(item => item.Id == id).FirstOrDefault();
+
+    public void Create(Item newItem)
+    {
+        items.Add(newItem);
+    }
+
+    public void UpdateItem(Item updatedItem)
+    {
+        var index = items.FindIndex(item => item.Id == updatedItem.Id);
+        items[index] = updatedItem;
+    }
+
+    public void DeleteItem(Guid id)
+    {
+        var index = items.FindIndex(item => item.Id == id);
+        items.RemoveAt(index);
+    }
 }
