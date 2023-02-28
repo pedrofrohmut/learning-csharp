@@ -1,5 +1,8 @@
 ﻿// dotnet run -v quiet
-class Program
+
+namespace ns21;
+
+class WarriorsFightToTheDeath
 {
     static void Main(string[] args)
     {
