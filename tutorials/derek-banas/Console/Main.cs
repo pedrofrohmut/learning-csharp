@@ -1,10 +1,10 @@
 ﻿// dotnet run -v quiet
 
-namespace ns21;
+namespace ns26;
 
-class WarriorsFightToTheDeath
+class Generics
 {
-    static void Main(string[] args)
+    static void __Main(string[] args)
     {
     }
 }

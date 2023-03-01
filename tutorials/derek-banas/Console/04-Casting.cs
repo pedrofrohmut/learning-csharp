@@ -10,5 +10,6 @@
         Type strType = strVal.GetType();
         double n = 12.345;
         int nInt = (int) 12;
+        Console.WriteLine(n + nInt);
     }
 }
