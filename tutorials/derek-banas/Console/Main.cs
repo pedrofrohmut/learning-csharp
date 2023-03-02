@@ -1,10 +1,16 @@
 ﻿// dotnet run -v quiet
 
-namespace ns26;
+namespace ns32;
 
-class Generics
+class FileHandling
 {
-    static void __Main(string[] args)
+    static void AddSeparator() =>
+        Console.WriteLine("\n####################################################\n");
+
+    static void PrintArray<T>(T[] arr) =>
+        Console.WriteLine("[ " + String.Join(", ", arr) + " ]");
+
+    static void Main(string[] args)
     {
     }
 }
