@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><Animal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Id>42</Id><Name>Pluto</Name><Height>35</Height><Weight>15</Weight></Animal>

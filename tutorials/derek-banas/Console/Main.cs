@@ -1,16 +1,15 @@
 ﻿// dotnet run -v quiet
 
-namespace ns32;
+namespace ns34;
 
-class FileHandling
+class Program
 {
-    static void AddSeparator() =>
-        Console.WriteLine("\n####################################################\n");
+    static void AddSeparator() => Console.WriteLine("\n####################################################\n");
 
-    static void PrintArray<T>(T[] arr) =>
-        Console.WriteLine("[ " + String.Join(", ", arr) + " ]");
+    static void PrintArray<T>(T[] arr) => Console.WriteLine("[ " + String.Join(", ", arr) + " ]");
 
     static void Main(string[] args)
     {
+        Console.WriteLine("Hello, Program!");
     }
 }
