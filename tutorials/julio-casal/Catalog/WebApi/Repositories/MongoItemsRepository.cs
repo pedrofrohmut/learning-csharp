@@ -17,34 +17,31 @@ public class MongoItemsRepository : IItemsRepository
         items = database.GetCollection<Item>(COLLECTION_NAME);
     }
 
-    public void CreateItem(Item newItem)
+    public Task CreateItemAsync(Item newItem)
     {
-        items.InsertOne(newItem);
+        return items.InsertOneAsync(newItem);
     }
 
-    public void DeleteItem(Guid id)
+    public Task DeleteItemAsync(Guid id)
     {
-        items.DeleteOne(x => x.Id == id);
+        return items.DeleteOneAsync(x => x.Id == id);
     }
 
-    public Item? GetItemById(Guid id)
+    public Task<Item> GetItemByIdAsync(Guid id)
     {
-        return items.Find(x => x.Id == id).FirstOrDefault();
+        return items.Find(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public IEnumerable<Item> GetItems()
+    public async Task<IEnumerable<Item>> GetItemsAsync()
     {
-        return items.Find(new BsonDocument()).ToList();
+        return await items.Find(new BsonDocument()).ToListAsync();
     }
 
-    public void UpdateItem(Item updatedItem)
+    public Task UpdateItemAsync(Item updatedItem)
     {
-        var oldItem = items.AsQueryable().FirstOrDefault(x => x.Id == updatedItem.Id);
-        if (oldItem != null) {
-            var update = Builders<Item>.Update
-                .Set(x => x.Name, updatedItem.Name)
-                .Set(x => x.Price, updatedItem.Price);
-            items.UpdateOne(x => x.Id == updatedItem.Id, update);
-        }
+        var update = Builders<Item>.Update
+            .Set(x => x.Name, updatedItem.Name)
+            .Set(x => x.Price, updatedItem.Price);
+        return items.UpdateOneAsync(x => x.Id == updatedItem.Id, update);
     }
 }

@@ -15,27 +15,32 @@ public class InMemoryItemsRepository : IItemsRepository
         };
     }
 
-    public IEnumerable<Item> GetItems() => items;
+    public Task<IEnumerable<Item>> GetItemsAsync() =>
+        Task.FromResult((IEnumerable<Item>) items);
 
-    public Item? GetItemById(Guid id) => items.FirstOrDefault<Item>(x => x.Id == id);
+    public Task<Item> GetItemByIdAsync(Guid id) =>
+        Task.FromResult(items.SingleOrDefault(x => x.Id == id)!);
 
-    public void CreateItem(Item item)
+    public Task CreateItemAsync(Item item)
     {
         items.Add(item);
+        return Task.CompletedTask;
     }
 
-    public void UpdateItem(Item updatedItem)
+    public Task UpdateItemAsync(Item updatedItem)
     {
         var oldItem = items.FirstOrDefault(x => x.Id == updatedItem.Id);
         if (oldItem != null) {
             items.Remove(oldItem);
         }
         items.Add(updatedItem);
+        return Task.CompletedTask;
     }
 
-    public void DeleteItem(Guid id)
+    public Task DeleteItemAsync(Guid id)
     {
         var itemToDelete = items.FirstOrDefault(x => x.Id == id);
         if (itemToDelete != null) items.Remove(itemToDelete);
+        return Task.CompletedTask;
     }
 }
