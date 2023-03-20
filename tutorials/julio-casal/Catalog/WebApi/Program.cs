@@ -55,6 +55,7 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions() {
         await context.Response.WriteAsync(result);
     }
 });
+
 app.MapHealthChecks("/health/live", new HealthCheckOptions() {
     Predicate = _ => false
 });

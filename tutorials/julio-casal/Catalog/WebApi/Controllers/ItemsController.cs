@@ -26,12 +26,11 @@ public class ItemsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ItemDto>> GetItByIdAsync(string id)
+    public async Task<ActionResult<ItemDto>> GetItemByIdAsync(Guid id)
     {
-        var item = await itemsRepository.GetItemByIdAsync(Guid.Parse(id));
+        var item = await itemsRepository.GetItemByIdAsync(id);
         if (item == null) return NotFound();
-        var itemDto = item.AsDto();
-        return Ok(itemDto);
+        return Ok(item.AsDto());
     }
 
     [HttpPost]
