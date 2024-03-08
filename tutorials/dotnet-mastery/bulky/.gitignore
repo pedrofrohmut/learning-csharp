@@ -1,0 +1,8 @@
+**/bin/
+**/obj/
+
+BulkyWeb/wwwroot/lib/
+
+docker-compose.yml
+
+.docker_volume/
