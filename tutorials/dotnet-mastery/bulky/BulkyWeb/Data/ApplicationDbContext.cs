@@ -21,4 +21,13 @@ public class ApplicationDbContext : DbContext
         string connectionString = new MyUtils().GetConnectionString(configuration);
         optionsBuilder.UseNpgsql(connectionString);
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<CategoryModel>().HasData(
+	    new CategoryModel { CategoryId = 1, Name = "Action",  DisplayOrder = 1 },
+	    new CategoryModel { CategoryId = 2, Name = "SciFi",   DisplayOrder = 2 },
+	    new CategoryModel { CategoryId = 3, Name = "History", DisplayOrder = 3 }
+	);
+    }
 }

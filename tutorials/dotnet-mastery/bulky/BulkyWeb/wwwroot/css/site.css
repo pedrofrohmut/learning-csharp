@@ -1,9 +1,112 @@
 :root {
     font-size: 16px;
+    --fs-700: 3rem;
+    --fs-600: 2rem;
+    --fs-500: 1.6rem;
+    --fs-400: 1.2rem;
+    --neutral-300: #333;
+    --neutral-400: #484848;
+    --neutral-500: #666;
+    --neutral-600: #888;
+    --neutral-700: #aaa;
+    --neutral-800: #ccc;
+    --neutral-850: #d5d5d5;
+    --neutral-900: #e3e3e3;
+    --neutral-950: #f3f3f3;
+    --max-content-width: 1200px;
+}
+
+*, *::before, *::after {
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
+    font-size: inherit;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
 }
 
 html {
-    color-scheme: dark;
-    background-color: red !important;
+    color-scheme: light;
+    background-color: var(--neutral-850);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    color: var(--neutral-400);
+}
+
+main {
+    width: min(var(--max-content-width), 100vw);
+    margin-inline: auto;
+    flex: 1;
+    padding: 2rem 0;
+}
+
+footer {
+    width: min(var(--max-content-width), 100vw);
+    margin-inline: auto;
+    min-height: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+    color: var(--neutral-400);
+    font-size: var(--fs-400);
+    border-top: 1px solid var(--neutral-800);
+}
+
+footer a {
+    color: var(--neutral-400);
+    position: relative;
+    text-decoration: none;
+}
+
+header {
+    border-bottom: 1px solid var(--neutral-900);
+    box-shadow: 0px 8px 15px -15px var(--neutral-600);
+}
+
+.navbar {
+    --nav-link-color: var(--neutral-500);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    max-width: var(--max-content-width);
+    margin-inline: auto;
+    padding: 0.8rem 0;
+}
+
+.navbar .logo {
+    color: var(--neutral-500);
+    font-size: var(--fs-700);
+}
+
+.navbar ul {
+    flex: 1;
+    list-style: none;
+    font-size: var(--fs-400);
+    display: flex;
+    gap: 1rem;
+}
+
+.navbar ul a {
+    color: var(--nav-link-color);
+    text-decoration: none;
+    position: relative;
+}
+
+.navbar ul a::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    top: calc(2px + 100%);
+    left: 0;
+    right: 0;
+    background-color: var(--nav-link-color, red);
 }
