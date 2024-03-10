@@ -13,7 +13,6 @@ public class MyUtils
 	    System.Environment.Exit(1);
         }
 	var connectionString = $"Host=localhost;Username={username};Password={password};Database=bulky_db";
-        Console.WriteLine(connectionString);
         return connectionString;
     }
 }

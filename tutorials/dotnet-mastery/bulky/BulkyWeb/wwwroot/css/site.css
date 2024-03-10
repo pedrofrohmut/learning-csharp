@@ -1,9 +1,13 @@
 :root {
     font-size: 16px;
+
     --fs-700: 3rem;
     --fs-600: 2rem;
     --fs-500: 1.6rem;
     --fs-400: 1.2rem;
+
+    --neutral-100: #070707;
+    --neutral-200: #121212;
     --neutral-300: #333;
     --neutral-400: #484848;
     --neutral-500: #666;
@@ -13,7 +17,18 @@
     --neutral-850: #d5d5d5;
     --neutral-900: #e3e3e3;
     --neutral-950: #f3f3f3;
+
+    --primary-400: #33f;
+
     --max-content-width: 1200px;
+    --border-radius: 5px;
+    --box-padding: 0.3em 1.2em;
+}
+
+@media (width < 500px) {
+    :root {
+	--fs-700: 2.2rem;
+    }
 }
 
 *, *::before, *::after {
@@ -30,7 +45,7 @@ html, body {
 
 html {
     color-scheme: light;
-    background-color: var(--neutral-850);
+    background-color: var(--neutral-950);
 }
 
 body {
@@ -39,14 +54,85 @@ body {
     color: var(--neutral-400);
 }
 
-main {
+/* Global Rules  */
+
+h1 {
+    font-size: var(--fs-700);
+}
+
+.page-title {
+    margin-bottom: 0.3em;
+}
+
+button {
+    font-size: var(--fs-300);
+    padding: var(--box-padding);
+    border-radius: var(--border-radius);
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+button:is(:focus, :hover) {
+    opacity: 0.8;
+}
+
+button i {
+    position: relative;
+    top: 1px;
+    margin-right: 0.6em;
+    color: inherit;
+}
+
+.primary-button {
+    background-color: var(--primary-400);
+    color: var(--neutral-950);
+}
+
+.secondary-button {
+    background-color: var(--neutral-900);
+    color: var(--neutral-300);
+}
+
+.form-group {
+    margin-block: 0.7em;
+}
+
+form {
+    font-size: var(--fs-400);
+}
+
+form label {
+    display: inline-block;
+    width: clamp(160px, 10vw, 200px);
+}
+
+form input[type="number"],
+form input[type="text"] {
+    width: clamp(250px, 30vw, 400px);
+    padding: var(--box-padding);
+    border: 1px solid var(--neutral-700);
+    border-radius: var(--border-radius);
+    background-color: var(--neutral-950);
+    color: var(--neutral-200);
+}
+
+/* Page Layout */
+
+.page__header {
+    background-color: var(--neutral-300);
+    color: var(--neutral-800);
+    /* border-bottom: 1px solid var(--neutral-900); */
+    box-shadow: 0px 5px 15px var(--neutral-600);
+}
+
+.page__main {
     width: min(var(--max-content-width), 100vw);
     margin-inline: auto;
     flex: 1;
     padding: 2rem 0;
 }
 
-footer {
+.page__footer {
     width: min(var(--max-content-width), 100vw);
     margin-inline: auto;
     min-height: 3rem;
@@ -60,19 +146,16 @@ footer {
     border-top: 1px solid var(--neutral-800);
 }
 
-footer a {
+.page__footer a {
     color: var(--neutral-400);
     position: relative;
     text-decoration: none;
 }
 
-header {
-    border-bottom: 1px solid var(--neutral-900);
-    box-shadow: 0px 8px 15px -15px var(--neutral-600);
-}
+/* Navbar */
 
 .navbar {
-    --nav-link-color: var(--neutral-500);
+    --nav-link-color: var(--neutral-800);
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -82,8 +165,9 @@ header {
 }
 
 .navbar .logo {
-    color: var(--neutral-500);
-    font-size: var(--fs-700);
+    font-size: var(--fs-500);
+    font-weight: 700;
+    color: var(--neutral-900);
 }
 
 .navbar ul {
@@ -100,13 +184,27 @@ header {
     position: relative;
 }
 
-.navbar ul a::after {
-    content: "";
-    position: absolute;
-    height: 2px;
-    width: 100%;
-    top: calc(2px + 100%);
-    left: 0;
-    right: 0;
-    background-color: var(--nav-link-color, red);
+/* .navbar ul a::after { */
+/*     content: ""; */
+/*     position: absolute; */
+/*     height: 1px; */
+/*     width: 100%; */
+/*     top: calc(8px + 100%); */
+/*     left: 0; */
+/*     right: 0; */
+/*     background-color: var(--nav-link-color); */
+/* } */
+
+/* Category Page */
+
+.content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+}
+
+.category__add-button {
+    background-color: var(--neutral-300);
+    color: var(--neutral-800);
 }
