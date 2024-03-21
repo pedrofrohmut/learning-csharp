@@ -29,9 +29,25 @@ public class CategoryController : Controller
     [HttpPost]
     public IActionResult Create(CategoryModel category)
     {
-	// Console.WriteLine("Category from post: {0}, {1}", category.Name, category.DisplayOrder);
         context.Categories.Add(category);
         context.SaveChanges();
         return RedirectToAction("Index", "Category");
+    }
+
+    [HttpGet]
+    public IActionResult Edit(int? id)
+    {
+	if (id == null || id == 0) return BadRequest();
+        var category = context.Categories.Find(id);
+	if (category == null) return NotFound();
+        return View(category);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(CategoryModel category)
+    {
+	context.Categories.Update(category);
+	context.SaveChanges();
+	return RedirectToAction("Index", "Category");
     }
 }

@@ -11,7 +11,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<CategoryModel> Categories { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
-	: base (options)
+    : base (options)
     {
 	this.configuration = configuration;
     }
