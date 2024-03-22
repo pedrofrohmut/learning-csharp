@@ -1,0 +1,19 @@
+@model Bloggie.Mvc.Models.ViewModels.AddTagRequest
+
+<div class="container">
+  <h1>Add new tag - Admin Functionality</h1>
+
+  <form method="post">
+    <div class="mb-3">
+      <label>Name</label>
+      <input type="text" class="form-control" asp-for="Name" />
+    </div>
+
+    <div class="mb-3">
+      <label>Display Name</label>
+      <input class="form-control" type="text" asp-for="DisplayName" />
+    </div>
+
+    <button class="btn btn-primary">Add</button>
+  </form>
+</div>
