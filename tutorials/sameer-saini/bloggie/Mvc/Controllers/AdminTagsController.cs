@@ -1,3 +1,5 @@
+using Bloggie.Mvc.Data;
+using Bloggie.Mvc.Models.Domain;
 using Bloggie.Mvc.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,6 +8,13 @@ namespace Bloggie.Mvc.Controllers;
 [Route("AdminTags")]
 public class AdminTagsController : Controller
 {
+    private readonly ApplicationDbContext dbContext;
+
+    public AdminTagsController(ApplicationDbContext dbContext)
+    {
+        this.dbContext = dbContext;
+    }
+
     [HttpGet("Add")]
     public IActionResult AddGet()
     {
@@ -15,12 +24,9 @@ public class AdminTagsController : Controller
     [HttpPost("Add")]
     public IActionResult AddPost(AddTagRequest formData)
     {
-        // var name = Request.Form["name"];
-        // var displayName = Request.Form["display_name"];
-        var name = formData.Name;
-        var displayName = formData.DisplayName;
-        Console.WriteLine("Name: " + name);
-        Console.WriteLine("DisplayName: " + displayName);
+        var tag = new Tag { Name = formData.Name, DisplayName = formData.DisplayName };
+        dbContext.Tags.Add(tag);
+        dbContext.SaveChanges();
         return View("~/Views/Home/Index.cshtml");
     }
 }

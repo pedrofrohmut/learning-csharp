@@ -12,7 +12,7 @@ public class MyUtils
 	    Console.WriteLine("INFO:  Exiting...");
 	    System.Environment.Exit(1);
         }
-        var connectionString = $"Host=localhost;Username={username};Password={password};Database=bulky_db";
+        var connectionString = $"Host=localhost;Username={username};Password={password};Database=bloggie_db";
         return connectionString;
     }
 }
