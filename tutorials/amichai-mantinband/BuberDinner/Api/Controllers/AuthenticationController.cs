@@ -1,9 +1,8 @@
-using BuberDinner.Contracts.Authentication;
 using BuberDinner.Application.Services.Authentication;
-
+using BuberDinner.Contracts.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BuberDinner.Api.Controllers;
+namespace BubberDinner.Api.Controllers;
 
 [ApiController]
 [Route("api/auth")]
@@ -17,38 +16,35 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("register")]
-    public ActionResult Register([FromBody] RegisterRequest reqBody)
+    public IActionResult Register(RegisterRequest req)
     {
         var result = this.authenticationService.Register(
-                reqBody.FirstName,
-                reqBody.LastName,
-                reqBody.Email,
-                reqBody.Password
-                );
+            req.firstName,
+            req.lastName,
+            req.email,
+            req.password
+        );
         var response = new AuthenticationResponse(
-                result.Id,
-                result.FirstName,
-                result.LastName,
-                result.Email,
-                result.Token
-                );
+            result.id,
+            result.firstName,
+            result.lastName,
+            result.email,
+            result.token
+        );
         return Ok(response);
     }
 
     [HttpPost("login")]
-    public ActionResult Login([FromBody] LoginRequest reqBody)
+    public IActionResult Login(LoginRequest req)
     {
-        var result = this.authenticationService.Login(
-                reqBody.Email,
-                reqBody.Password
-                );
+        var result = this.authenticationService.Login(req.email, req.password);
         var response = new AuthenticationResponse(
-                result.Id,
-                result.FirstName,
-                result.LastName,
-                result.Email,
-                result.Token
-                );
+            result.id,
+            result.firstName,
+            result.lastName,
+            result.email,
+            result.token
+        );
         return Ok(response);
     }
 }

@@ -13,7 +13,7 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
     : base (options)
     {
-	this.configuration = configuration;
+        this.configuration = configuration;
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
