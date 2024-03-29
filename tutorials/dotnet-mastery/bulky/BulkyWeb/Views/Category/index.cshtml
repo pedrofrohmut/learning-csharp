@@ -1,33 +1,33 @@
 @model List<CategoryModel>
 
-  <header class="category__header content-header">
-    <h1>Category List</h1>
-    <a asp-controller="Category" asp-action="Create">
-      <button class="category__add-button">
-	<i class="fas fa-plus"></i>
-	Add Category
-      </button>
-    </a>
-  </header>
+<header class="category__header content-header">
+  <h1>Category List</h1>
+  <a asp-controller="Category" asp-action="Create">
+    <button class="category__add-button">
+    <i class="fas fa-plus"></i>
+    Add Category
+    </button>
+  </a>
+</header>
 
-  <table class="table category__table">
-    <thead>
+<table class="table category__table">
+  <thead>
+    <tr>
+    <th>Category Name</th>
+    <th>Display Order</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(var category in Model)
+    {
       <tr>
-	<th>Category Name</th>
-	<th>Display Order</th>
+        <td>@category.Name</td>
+        <td>@category.DisplayOrder</td>
+        <td>
+          <a asp-controller="Category" asp-action="Edit" asp-route-id="@category.CategoryId">Edit</a>
+          <a asp-controller="Category" asp-action="Delete">Delete</a>
+        </td>
       </tr>
-    </thead>
-    <tbody>
-      @foreach(var category in Model)
-      {
-	<tr>
-	<td>@category.Name</td>
-	  <td>@category.DisplayOrder</td>
-	  <td>
-	    <a asp-controller="Category" asp-action="Edit" asp-route-id="@category.CategoryId">Edit</a>
-	    <a asp-controller="Category" asp-action="Delete">Delete</a>
-	  </td>
-        </tr>
-      }
-    </tbody>
-  </table>
+    }
+  </tbody>
+</table>

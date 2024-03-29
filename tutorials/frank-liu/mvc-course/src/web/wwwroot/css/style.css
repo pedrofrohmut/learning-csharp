@@ -1,0 +1,48 @@
+.page-container {
+    margin-inline: auto;
+    width: min(100vw - 2rem, 800px);
+}
+
+table {
+    text-align: left;
+    border-collapse: collapse;
+}
+
+table th {
+    border-bottom: 1px solid #ccc;
+}
+
+tbody tr:nth-child(even) {
+    background: #e7e7e7;
+}
+
+table td, table th {
+    padding: 0.3em 0.6em;
+}
+
+.form-group {
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+}
+
+.form-group label {
+    width: 20%;
+}
+
+.form-group input[type="text"] {
+    flex: 1;
+    padding: 0.4rem 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.error-message {
+    color: #a00;
+}
+
+form .error-message {
+    display: block;
+    margin-left: 20%;
+    margin-bottom: 0.6rem;
+}

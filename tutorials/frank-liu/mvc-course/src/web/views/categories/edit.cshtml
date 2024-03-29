@@ -1,0 +1,33 @@
+@model Category;
+
+@if (Model == null) {
+
+  <h1>Invalid Category</h1>
+
+} else {
+
+  @section title {
+    <h1>Edit categories page</h1>
+  }
+
+  <div class="error-message" asp-validation-summary="All"></div>
+
+  <form method="post" action="/categories/edit">
+    <input name="CategoryId" type="hidden" value="@Model.CategoryId" />
+
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" name="Name" value="@Model.Name">
+    </div>
+    <span class="error-message" asp-validation-for="Name"></span>
+
+    <div class="form-group">
+      <label>Description</label>
+      <input type="text" name="Description" value="@Model.Description">
+    </div>
+    <span class="error-message" asp-validation-for="Description"></span>
+
+    <button>Save Changes</button>
+  </form>
+
+}

@@ -1,0 +1,23 @@
+@model Category
+
+@section title {
+  <h1>Add category</h1>
+}
+
+<div class="error-message" asp-validation-summary="All"></div>
+
+<form method="post" action="/categories/add">
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" name="Name" value="">
+  </div>
+  <span class="error-message" asp-validation-for="Name"></span>
+
+  <div class="form-group">
+    <label>Description</label>
+    <input type="text" name="Description" value="">
+  </div>
+  <span class="error-message" asp-validation-for="Description"></span>
+
+  <button>Submit</button>
+</form>
