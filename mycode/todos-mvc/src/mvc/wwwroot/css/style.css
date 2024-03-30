@@ -1,0 +1,77 @@
+:root {
+    font-size: 16px;
+
+    /* Tokyo Pallete */
+    --pink: #f7768e;
+    --orange: #ff9e64;
+    --yellow: #e0af68;
+    --green: #9ece6a;
+    --blueGreen: #73daca;
+    --lightBlueGreen: #b4f9f8;
+    --blue: #2ac3de;
+    --blue-100: #280067;
+    --lightBlue: #7dcfff;
+    --grayBlue: #7aa2f7;
+    --purple: #bb9af7;
+    --darkPurple: #7f41f1;
+    --gray-100: #cfc9c2;
+    --gray-200: #c0caf5;
+    --gray-300: #a9b1d6;
+    --gray-400: #9aa5ce;
+    --gray-500: #565f89;
+    --gray-600: #414868;
+    --gray-700: #24283b;
+    --gray-800: #1a1b26;
+
+    /* Takoy pallete B */
+    --bGreen: #00ffd2;
+    --bRed: #ff4499;
+    --bDarkBlue: #0a0047;
+    --bBlue: #004687;
+
+    /* Badic */
+    --black: #000000;
+    --white: #ffffff;
+
+    --borderRadius: 0.7em;
+
+    --fw-light: 300;
+    --fw-regular: 400;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+
+    --ff-main: "Inter", sans-serif;
+}
+
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-color: var(--gray-700);
+    color: var(--white);
+    line-height: 1.2;
+    font-weight: var(--fw-regular);
+    min-width: 375px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 1em;
+}
+
+h1 { font-size: 2.5rem }
+h2 { font-size: 2.0rem }
+h3 { font-size: 1.5rem }
+h4 { font-size: 1.1rem }
+
+a {
+    color: var(--white);
+}

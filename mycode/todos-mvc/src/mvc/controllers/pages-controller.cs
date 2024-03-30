@@ -27,4 +27,10 @@ public class PagesController : Controller
     {
         return View("~/pages/signin.cshtml");
     }
+
+    [HttpGet("/signout")]
+    public IActionResult SignOutPage()
+    {
+        return View("~/pages/index.cshtml");
+    }
 }
