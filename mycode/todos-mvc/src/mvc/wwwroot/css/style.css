@@ -41,6 +41,9 @@
     --fw-bold: 700;
 
     --ff-main: "Inter", sans-serif;
+
+    --box-padding: 0.8rem 1.2rem;
+    --border-radius: 5px;
 }
 
 *, *::after, *::before {
@@ -61,6 +64,7 @@ body {
     line-height: 1.2;
     font-weight: var(--fw-regular);
     min-width: 375px;
+    font-family: var(--ff-main);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -74,4 +78,73 @@ h4 { font-size: 1.1rem }
 
 a {
     color: var(--white);
+}
+
+/* Buttons */
+
+.btn {
+    padding: var(--box-padding);
+    color: var(--gray-200);
+    font-weight: var(--fw-semibold);
+    background-color: var(--darkPurple);
+    border: 1px solid var(--darkPurple);
+    border-radius: var(--border-radius);
+}
+
+/* Page */
+
+.page-container {
+    width: min(calc(100vw - 2rem), 800px);
+    margin-inline: auto;
+}
+
+section.heading {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    color: var(--lightBlueGreen);
+    margin-bottom: 1.8rem;
+}
+
+section.heading p {
+    font-size: 1.3rem;
+    color: var(--gray-500);
+}
+
+/* Forms */
+
+form {
+    width: 100%;
+}
+
+form .form-group {
+    margin-bottom: 1.2rem;
+}
+
+form .label-block {
+    display: block;
+    margin-bottom: 0.6rem;
+    padding-left: 0.5rem;
+    font-size: 1rem;
+    color: var(--lightBlueGreen);
+}
+
+form .form-text {
+    width: max(375px, 100%);
+    padding: var(--box-padding);
+    border: 0;
+    border-radius: var(--border-radius);
+    background-color: var(--gray-500);
+    color: var(--white);
+}
+
+form .form-text::placeholder {
+    color: var(--gray-700);
+}
+
+form button {
+    margin-top: 0.6rem;
 }
