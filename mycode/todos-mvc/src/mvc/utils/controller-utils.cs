@@ -4,6 +4,10 @@ public static class ControllerUtils
 {
     public static String GetConnectionString(IConfiguration config)
     {
-        throw new NotImplementedException();
+        var username = config["DB_USER"];
+        var password = config["DB_PASSWORD"];
+        var connection_string = $"Host=localhost; Port=5009; Username={username};" +
+                                $"Password={password}; Database=goals_db";
+        return connection_string;
     }
 }

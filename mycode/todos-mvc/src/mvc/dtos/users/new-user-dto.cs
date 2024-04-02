@@ -1,9 +1,9 @@
 namespace TodosMvc.Mvc.Dtos.Users;
 
-public struct NewUserDto
+public class NewUserDto
 {
-    public string name;
-    public string email;
-    public string phone;
-    public string password;
+    public string Name { get; set; } = "";
+    public string Email { get; set; } = "";
+    public string Phone { get; set; } = "";
+    public string Password { get; set; } = "";
 }
