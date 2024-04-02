@@ -1,1 +1,41 @@
-<h1>Sign In Page</h1>
+<div class="page-container">
+
+  <!-- Heading -->
+  <section class="heading">
+    <h1 class="page-title">Sign In</h1>
+    <p>Inform your credentials to access the dashboard</p>
+  </section>
+
+  <!-- Sign Up Form -->
+  <section class="form">
+    <form method="post" action="/api/users/signin">
+      <!-- E-mail -->
+      <div class="form-group">
+        <label class="label-block">E-mail</label>
+        <input
+          name="email"
+          type="email"
+          class="form-text"
+          placeholder="Enter an E-mail address"
+          required
+          />
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label class="label-block">Password</label>
+        <input
+          name="password"
+          type="password"
+          class="form-text"
+          placeholder="Enter a password for this e-mail"
+          min="3"
+          required
+          >
+      </div>
+
+      <button type="submit" class="btn">Submit</button>
+    </form>
+  </section>
+
+</div>
