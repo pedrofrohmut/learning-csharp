@@ -18,7 +18,6 @@ public class ConnectionManager : IConnectionManager
         }
         try {
             connection.Open();
-            Console.WriteLine("!!! Connected to database !!!");
         } catch (Exception e) {
             throw new Exception("[ERROR] failed to open database connection: " + e.Message);
         }

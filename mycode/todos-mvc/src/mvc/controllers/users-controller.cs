@@ -25,8 +25,15 @@ public class UsersController : Controller
     }
 
     [HttpPost("signup")]
-    public IActionResult SignUpUser([FromForm] NewUserDto newUser)
+    public async Task<IActionResult> SignUpUser()
     {
+        var newUser = new CreateUserForm() {
+            name = Request.Form["name"],
+            email = Request.Form["email"],
+            phone = Request.Form["phone"],
+            password = Request.Form["password"],
+        };
+
         ConnectionManager? connectionManager = null;
         IDbConnection? connection = null;
         try {
@@ -45,7 +52,7 @@ public class UsersController : Controller
             var adaptedRequest = new WebAdaptedRequest() { body = newUser };
 
             // Call webAdapter with the instance of useCase and adaptedRequest
-            var adaptedResponse = UsersWebAdapter.SignUpUser(signUpUserUseCase, adaptedRequest);
+            var adaptedResponse = await UsersWebAdapter.SignUpUser(signUpUserUseCase, adaptedRequest);
 
             if (adaptedResponse.statusCode != 201) {
                 return new ObjectResult(adaptedResponse.message) { StatusCode = adaptedResponse.statusCode };
