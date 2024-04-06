@@ -27,7 +27,7 @@ public class UsersController : Controller
     [HttpPost("signup")]
     public async Task<IActionResult> SignUpUser()
     {
-        var newUser = new CreateUserForm() {
+        var newUser = new CreateUserDto() {
             name = Request.Form["name"],
             email = Request.Form["email"],
             phone = Request.Form["phone"],
@@ -54,13 +54,20 @@ public class UsersController : Controller
             // Call webAdapter with the instance of useCase and adaptedRequest
             var adaptedResponse = await UsersWebAdapter.SignUpUser(signUpUserUseCase, adaptedRequest);
 
+            // if (adaptedResponse.statusCode != 201) {
+            //     return new ObjectResult(adaptedResponse.message) { StatusCode = adaptedResponse.statusCode };
+            // }
+
+            // return new ObjectResult(adaptedResponse.body) { StatusCode = adaptedResponse.statusCode };
+
             if (adaptedResponse.statusCode != 201) {
-                return new ObjectResult(adaptedResponse.message) { StatusCode = adaptedResponse.statusCode };
+                Console.WriteLine("ERROR: " + adaptedResponse.message);
+                return RedirectToAction("SignUpPage", "Pages");
             }
 
-            return new ObjectResult(adaptedResponse.body) { StatusCode = adaptedResponse.statusCode };
+            return RedirectToAction("SignInPage", "Pages");
         } catch (Exception e) {
-            return new ObjectResult(e.Message) { StatusCode = 500 };
+            return new ObjectResult("Unexpected Error: " + e.Message) { StatusCode = 500 };
         } finally {
             if (connectionManager != null) {
                 connectionManager.CloseConnection(connection);

@@ -2,7 +2,7 @@ namespace TodosMvc.Core.Dtos;
 
 public struct UserDbDto
 {
-    public string? id;
+    public Guid? id;
     public string? name;
     public string? email;
     public string? phone;

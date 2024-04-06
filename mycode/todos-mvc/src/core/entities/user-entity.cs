@@ -40,7 +40,8 @@ public class UserEntity
         if (phone == null) {
             throw new UserValidationException("Phone is null. Phone is required and cannot be null.");
         }
-        if (new Regex(@"\d{3}-\d{3}-\d{4}").IsMatch(phone)) {
+        var isPatternMatch = new Regex(@"\d{3}-\d{3}-\d{4}").IsMatch(phone);
+        if (! isPatternMatch) {
             throw new UserValidationException("Phone pattern does not match.");
         }
     }
