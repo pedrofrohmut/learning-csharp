@@ -1,0 +1,18 @@
+@{
+  string? successMessage = ViewData["SuccessMessage"] as string;
+  string? errorMessage = ViewData["ErrorMessage"] as string;
+}
+
+@if (! string.IsNullOrWhiteSpace(successMessage)) {
+  <div class="success-message" role="alert">
+    <span>Success: @successMessage</span>
+    <button onClick="deleteMessage(this)">X</button>
+  </div>
+}
+
+@if (! string.IsNullOrWhiteSpace(errorMessage)) {
+  <div class="error-message" role="alert">
+    <span>Error: @errorMessage</span>
+    <button onClick="deleteMessage(this)">X</button>
+  </div>
+}

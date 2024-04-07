@@ -6,9 +6,11 @@
     <p>Inform your credentials to access the dashboard</p>
   </section>
 
+  @await Html.PartialAsync("~/pages/_messages-partial.cshtml")
+
   <!-- Sign Up Form -->
   <section class="form">
-    <form method="post" action="/api/users/signin">
+    <form method="post" action="/users/signin">
       <!-- E-mail -->
       <div class="form-group">
         <label class="label-block">E-mail</label>

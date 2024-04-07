@@ -14,7 +14,7 @@ namespace TodosMvc.Mvc.Controllers;
   TODO: discover how to log in/out with dotnet mvc without JS
 */
 
-[Route("api/users")]
+[Route("users")]
 public class UsersController : Controller
 {
     private readonly IConfiguration configuration;
@@ -54,17 +54,12 @@ public class UsersController : Controller
             // Call webAdapter with the instance of useCase and adaptedRequest
             var adaptedResponse = await UsersWebAdapter.SignUpUser(signUpUserUseCase, adaptedRequest);
 
-            // if (adaptedResponse.statusCode != 201) {
-            //     return new ObjectResult(adaptedResponse.message) { StatusCode = adaptedResponse.statusCode };
-            // }
-
-            // return new ObjectResult(adaptedResponse.body) { StatusCode = adaptedResponse.statusCode };
-
             if (adaptedResponse.statusCode != 201) {
-                Console.WriteLine("ERROR: " + adaptedResponse.message);
+                TempData["ErrorMessage"] = adaptedResponse.message;
                 return RedirectToAction("SignUpPage", "Pages");
             }
 
+            TempData["SuccessMessage"] = adaptedResponse.message;
             return RedirectToAction("SignInPage", "Pages");
         } catch (Exception e) {
             return new ObjectResult("Unexpected Error: " + e.Message) { StatusCode = 500 };

@@ -6,9 +6,11 @@
     <p>Provide some information to register a new user</p>
   </section>
 
+  @await Html.PartialAsync("~/pages/_messages-partial.cshtml")
+
   <!-- Sign Up Form -->
   <section class="form">
-    <form method="post" action="/api/users/signup">
+    <form method="post" action="/users/signup">
       <!-- Name -->
       <div class="form-group">
         <label class="label-block">Name</label>

@@ -29,9 +29,15 @@
     --bDarkBlue: #0a0047;
     --bBlue: #004687;
 
-    /* Badic */
+    /* Basic */
     --black: #000000;
     --white: #ffffff;
+
+    /* Messages */
+    --fg-success: #070;
+    --bg-success: #afa;
+    --fg-error: #700;
+    --bg-error: #faa;
 
     --borderRadius: 0.7em;
 
@@ -147,4 +153,33 @@ form .form-text::placeholder {
 
 form button {
     margin-top: 0.6rem;
+}
+
+/* Messages */
+
+.success-message,
+.error-message {
+    padding: var(--box-padding);
+    margin: 1rem 0;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.error-message {
+    color: var(--fg-error);
+    background-color: var(--bg-error);
+}
+
+.success-message {
+    color: var(--fg-success);
+    background-color: var(--bg-success);
+}
+
+.success-message button,
+.error-message  button {
+    border: 0;
+    background-color: transparent;
+    color: inherit;
 }

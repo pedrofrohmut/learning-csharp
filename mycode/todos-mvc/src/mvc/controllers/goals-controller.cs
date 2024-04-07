@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TodosMvc.Mvc.Controllers;
 
-[Route("api/goals")]
+[Route("goals")]
 public class GoalsController : Controller
 {
     [HttpPost("add")]
