@@ -24,7 +24,7 @@ public class UserDataAccess : IUserDataAccess
 
     public async Task<UserDbDto?> FindUserByEmail(string email)
     {
-        var sql = "SELECT id, name, email, phone, password_hash as passwordHash " +
+        var sql = "SELECT id, name, email, password_hash, phone " +
                   "FROM users WHERE email = @email";
         var userRow = await this.connection.QueryFirstOrDefaultAsync(sql, new { email });
 
@@ -35,7 +35,7 @@ public class UserDataAccess : IUserDataAccess
             name = userRow.name,
             email = userRow.email,
             phone = userRow.phone,
-            passwordHash = userRow.passwordHash,
+            passwordHash = userRow.password_hash,
         };
     }
 }

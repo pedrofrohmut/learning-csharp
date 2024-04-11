@@ -18,4 +18,19 @@ public static class UsersWebAdapter
             return new WebAdaptedResponse() { statusCode = 400, message = e.Message };
         }
     }
+
+    // TODO: think about change the signature to
+    // Task<WebAdaptedResponse> SignInUser(SignInUserUseCase useCase, UserCredentialsDto body)
+    public static async Task<WebAdaptedResponse> SignInUser(SignInUserUseCase useCase, WebAdaptedRequest req)
+    {
+        if (req.body == null) {
+            return new WebAdaptedResponse() { statusCode = 400, message = "Empty Request Body" };
+        }
+        try {
+            var signInDto = await useCase.Execute((UserCredentialsDto) req.body);
+            return new WebAdaptedResponse() { statusCode = 200, body = signInDto };
+        } catch (UserValidationException e) {
+            return new WebAdaptedResponse() { statusCode = 400, message = e.Message };
+        }
+    }
 }

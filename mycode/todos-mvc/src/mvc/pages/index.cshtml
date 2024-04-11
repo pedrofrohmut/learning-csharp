@@ -1,1 +1,11 @@
+@{
+  string? userId = @Context.Session.GetString("authUserId");
+}
+
 <h1>My Home Page</h1>
+
+@if (string.IsNullOrWhiteSpace(userId)) {
+  <p>User is not logged in</p>
+} else {
+  <p>UserId: @userId</p>
+}

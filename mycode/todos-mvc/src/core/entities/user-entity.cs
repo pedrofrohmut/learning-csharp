@@ -8,6 +8,16 @@ namespace TodosMvc.Core.Entities;
 
 public class UserEntity
 {
+    public static void ValidateId(Guid? id)
+    {
+        if (id == null) {
+            throw new UserValidationException("Id is null. Id is required and cannot be null.");
+        }
+        if (! Guid.TryParse(id.ToString(), out var _)) {
+            throw new UserValidationException("Id is not valid Guid format.");
+        }
+    }
+
     public static void ValidateName(string? name)
     {
         if (name == null) {
@@ -67,6 +77,12 @@ public class UserEntity
         UserEntity.ValidatePassword(newUser.password);
     }
 
+    public static void ValidateUser(UserCredentialsDto userCredentials)
+    {
+        UserEntity.ValidateEmail(userCredentials.email);
+        UserEntity.ValidatePassword(userCredentials.password);
+    }
+
     public async static Task<bool> IsEmailAvailable(string email, IUserDataAccess userDataAccess)
     {
         var user = await userDataAccess.FindUserByEmail(email);
@@ -76,5 +92,22 @@ public class UserEntity
     public async static Task<string> HashPassword(string password, IPasswordService passwordService)
     {
         return await passwordService.HashPassword(password);
+    }
+
+    public async static Task<UserDbDto> FindUserByEmail(string email, IUserDataAccess userDataAccess)
+    {
+        var user = await userDataAccess.FindUserByEmail(email);
+        if (user == null) {
+            throw new UserValidationException("User not found with the passed e-mail");
+        }
+        return user.Value;
+    }
+
+    public async static Task VerifyPassword(string password, string passwordHash, IPasswordService passwordService)
+    {
+        bool isMatch = await passwordService.VerifyPassword(password, passwordHash);
+        if (! isMatch) {
+            throw new UserValidationException("User password does not match the passed e-mail");
+        }
     }
 }

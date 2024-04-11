@@ -1,3 +1,7 @@
+@{
+  string? userId = Context.Session.GetString("authUserId");
+}
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -18,20 +22,23 @@
       <span class="logo">TodosMvc</span>
       <nav>
         <ul>
-          <li>
-            <a href="/">Home</a>
-          </li>
+          @if (! string.IsNullOrWhiteSpace(userId)) {
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/signout">SignOut</a>
+            </li>
+          } else {
+            <li>
+              <a href="/signup">SignUp</a>
+            </li>
+            <li>
+              <a href="/signin">SignIn</a>
+            </li>
+          }
           <li>
             <a href="/about">About</a>
-          </li>
-          <li>
-            <a href="/signup">SignUp</a>
-          </li>
-          <li>
-            <a href="/signin">SignIn</a>
-          </li>
-          <li>
-            <a href="/signout">SignOut</a>
           </li>
         </ul>
       </nav>

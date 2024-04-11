@@ -7,40 +7,50 @@ public class PagesController : Controller
     [HttpGet("/")]
     public IActionResult HomePage()
     {
-        ViewData["ErrorMessage"] = TempData["ErrorMessage"] as string;
-        ViewData["SuccessMessage"] = TempData["SuccessMessage"] as string;
+        ViewData["errorMessage"] = TempData["errorMessage"] as string;
+        ViewData["successMessage"] = TempData["successMessage"] as string;
+
+        string? authUserId = HttpContext.Session.GetString("authUserId");
+        if (string.IsNullOrWhiteSpace(authUserId)) {
+            TempData["errorMessage"] = "You need to be logged in to access this page";
+            return RedirectToAction("SignInPage", "Pages");
+        }
+
         return View("~/pages/index.cshtml");
     }
 
     [HttpGet("/about")]
     public IActionResult AboutPage()
     {
-        ViewData["ErrorMessage"] = TempData["ErrorMessage"] as string;
-        ViewData["SuccessMessage"] = TempData["SuccessMessage"] as string;
+        ViewData["errorMessage"] = TempData["errorMessage"] as string;
+        ViewData["successMessage"] = TempData["successMessage"] as string;
         return View("~/pages/about.cshtml");
     }
 
     [HttpGet("/signup")]
     public IActionResult SignUpPage()
     {
-        ViewData["ErrorMessage"] = TempData["ErrorMessage"] as string;
-        ViewData["SuccessMessage"] = TempData["SuccessMessage"] as string;
+        ViewData["errorMessage"] = TempData["errorMessage"] as string;
+        ViewData["successMessage"] = TempData["successMessage"] as string;
         return View("~/pages/signup.cshtml");
     }
 
     [HttpGet("/signin")]
     public IActionResult SignInPage()
     {
-        ViewData["ErrorMessage"] = TempData["ErrorMessage"] as string;
-        ViewData["SuccessMessage"] = TempData["SuccessMessage"] as string;
+        ViewData["errorMessage"] = TempData["errorMessage"] as string;
+        ViewData["successMessage"] = TempData["successMessage"] as string;
         return View("~/pages/signin.cshtml");
     }
 
     [HttpGet("/signout")]
     public IActionResult SignOutPage()
     {
-        ViewData["ErrorMessage"] = TempData["ErrorMessage"] as string;
-        ViewData["SuccessMessage"] = TempData["SuccessMessage"] as string;
-        return View("~/pages/index.cshtml");
+        ViewData["errorMessage"] = TempData["errorMessage"] as string;
+        ViewData["successMessage"] = TempData["successMessage"] as string;
+
+        HttpContext.Session.SetString("authUserId", "");
+
+        return View("~/pages/signin.cshtml");
     }
 }

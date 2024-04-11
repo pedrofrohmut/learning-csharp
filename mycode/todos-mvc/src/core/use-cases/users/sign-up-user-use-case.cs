@@ -22,6 +22,7 @@ public class SignUpUserUseCase
         UserEntity.ValidateUser(newUser);
         Console.WriteLine("[Info] New User is valid");
 
+        // TODO: move the if statement to UserEntity (rename to CheckEmailAvailable with no return)
         bool isEmailAvailable = await UserEntity.IsEmailAvailable(newUser.email!, this.userDataAccess);
         if (! isEmailAvailable) {
             throw new UserValidationException(
@@ -32,6 +33,7 @@ public class SignUpUserUseCase
         var passwordHash = await UserEntity.HashPassword(newUser.password!, this.passwordService);
         Console.WriteLine("[Info] Password hashed");
 
+        // TODO: Move it to UserEntity Method
         await this.userDataAccess.CreateUser(newUser, passwordHash);
         Console.WriteLine("[Info] User created");
     }
