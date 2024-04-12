@@ -101,7 +101,7 @@ public class UsersController : Controller
                 return RedirectToAction("SignInPage", "Pages");
             }
 
-            Console.WriteLine("UserId: " + userId);
+	    // Add userId to session
             HttpContext.Session.SetString("authUserId", userId);
 
             return RedirectToAction("HomePage", "Pages");
@@ -112,9 +112,11 @@ public class UsersController : Controller
         }
     }
 
-    [HttpPost("signout")]
+    [HttpGet("signout")]
     public IActionResult SignOutUser()
     {
-        return new ObjectResult("") { StatusCode = 204 };
+        HttpContext.Session.SetString("authUserId", "");
+        TempData["successMessage"] = "User signout successfully";
+        return RedirectToAction("SignInPage", "Pages");
     }
 }

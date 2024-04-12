@@ -2,6 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TodosMvc.Mvc.Controllers;
 
+/*
+  1. Other controllers are not supposed to call the view directly.
+  2. Other controllers should only call RedirectToAction and let PagesController
+  call the views
+*/
 public class PagesController : Controller
 {
     [HttpGet("/")]
@@ -40,17 +45,6 @@ public class PagesController : Controller
     {
         ViewData["errorMessage"] = TempData["errorMessage"] as string;
         ViewData["successMessage"] = TempData["successMessage"] as string;
-        return View("~/pages/signin.cshtml");
-    }
-
-    [HttpGet("/signout")]
-    public IActionResult SignOutPage()
-    {
-        ViewData["errorMessage"] = TempData["errorMessage"] as string;
-        ViewData["successMessage"] = TempData["successMessage"] as string;
-
-        HttpContext.Session.SetString("authUserId", "");
-
         return View("~/pages/signin.cshtml");
     }
 }
