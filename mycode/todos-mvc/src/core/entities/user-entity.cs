@@ -73,10 +73,13 @@ public static class UserEntity
         UserEntity.ValidatePassword(userCredentials.password);
     }
 
-    public async static Task<bool> IsEmailAvailable(string email, IUserDataAccess userDataAccess)
+    public async static Task CheckEmailAvailable(string email, IUserDataAccess userDataAccess)
     {
         var user = await userDataAccess.FindUserByEmail(email);
-        return user == null;
+        if (user != null) {
+            throw new UserValidationException(
+                "E-mail is not available. E-mail is already registered and must be unique");
+        }
     }
 
     public async static Task<string> HashPassword(string password, IPasswordService passwordService)
@@ -91,6 +94,11 @@ public static class UserEntity
             throw new UserValidationException("User not found with the passed e-mail");
         }
         return user.Value;
+    }
+
+    public async static Task CreateUser(CreateUserDto newUser, string passwordHash, IUserDataAccess userDataAccess)
+    {
+        await userDataAccess.CreateUser(newUser, passwordHash);
     }
 
     public async static Task VerifyPassword(string password, string passwordHash, IPasswordService passwordService)

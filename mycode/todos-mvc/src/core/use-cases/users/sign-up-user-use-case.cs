@@ -22,19 +22,13 @@ public class SignUpUserUseCase
         UserEntity.ValidateUser(newUser);
         Console.WriteLine("[Info] New User is valid");
 
-        // TODO: move the if statement to UserEntity (rename to CheckEmailAvailable with no return)
-        bool isEmailAvailable = await UserEntity.IsEmailAvailable(newUser.email!, this.userDataAccess);
-        if (! isEmailAvailable) {
-            throw new UserValidationException(
-                "E-mail is not available. E-mail is already registered and must be unique");
-        }
+        await UserEntity.CheckEmailAvailable(newUser.email!, this.userDataAccess);
         Console.WriteLine("[Info] E-mail is available");
 
         var passwordHash = await UserEntity.HashPassword(newUser.password!, this.passwordService);
         Console.WriteLine("[Info] Password hashed");
 
-        // TODO: Move it to UserEntity Method
-        await this.userDataAccess.CreateUser(newUser, passwordHash);
+        await UserEntity.CreateUser(newUser, passwordHash, this.userDataAccess);
         Console.WriteLine("[Info] User created");
     }
 }
