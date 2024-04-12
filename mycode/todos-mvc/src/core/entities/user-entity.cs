@@ -6,18 +6,8 @@ using TodosMvc.Core.Exceptions;
 
 namespace TodosMvc.Core.Entities;
 
-public class UserEntity
+public static class UserEntity
 {
-    public static void ValidateId(Guid? id)
-    {
-        if (id == null) {
-            throw new UserValidationException("Id is null. Id is required and cannot be null.");
-        }
-        if (! Guid.TryParse(id.ToString(), out var _)) {
-            throw new UserValidationException("Id is not valid Guid format.");
-        }
-    }
-
     public static void ValidateName(string? name)
     {
         if (name == null) {
@@ -109,5 +99,14 @@ public class UserEntity
         if (! isMatch) {
             throw new UserValidationException("User password does not match the passed e-mail");
         }
+    }
+
+    public async static Task<UserDbDto> FindUserById(Guid userId, IUserDataAccess userDataAccess)
+    {
+        var user = await userDataAccess.FindUserById(userId);
+        if (user == null) {
+            throw new UserValidationException("User not found with the passed userId");
+        }
+        return user.Value;
     }
 }

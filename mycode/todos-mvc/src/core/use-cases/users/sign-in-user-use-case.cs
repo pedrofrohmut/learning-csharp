@@ -27,12 +27,9 @@ public class SignInUserUseCase
         await UserEntity.VerifyPassword(userCredentials.password!, user.passwordHash!, this.passwordService);
         Console.WriteLine("[Info] User password matches");
 
-        UserEntity.ValidateId(user.id);
+        UtilsEntity.ValidateId(user.id);
         Console.WriteLine("[Info] User id is valid");
 
-        return new SignInDto() { userId = user.id.ToString() };
-
-        // "" is not possible here. Only for warnings to stop
-        // return new SignInDto() { userId = user.id?.ToString() ?? "" };
+        return new SignInDto() { userId = user.id?.ToString() ?? "" };
     }
 }

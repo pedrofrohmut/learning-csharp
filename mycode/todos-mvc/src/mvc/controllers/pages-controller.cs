@@ -15,11 +15,11 @@ public class PagesController : Controller
         ViewData["errorMessage"] = TempData["errorMessage"] as string;
         ViewData["successMessage"] = TempData["successMessage"] as string;
 
-        string? authUserId = HttpContext.Session.GetString("authUserId");
-        if (string.IsNullOrWhiteSpace(authUserId)) {
-            TempData["errorMessage"] = "You need to be logged in to access this page";
-            return RedirectToAction("SignInPage", "Pages");
-        }
+        // string? authUserId = HttpContext.Session.GetString("authUserId");
+        // if (string.IsNullOrWhiteSpace(authUserId)) {
+        //     TempData["errorMessage"] = "You need to be logged in to access this page";
+        //     return RedirectToAction("SignInPage", "Pages");
+        // }
 
         return View("~/pages/index.cshtml");
     }

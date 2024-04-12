@@ -25,8 +25,25 @@ public class UserDataAccess : IUserDataAccess
     public async Task<UserDbDto?> FindUserByEmail(string email)
     {
         var sql = "SELECT id, name, email, password_hash, phone " +
-                  "FROM users WHERE email = @email";
-        var userRow = await this.connection.QueryFirstOrDefaultAsync(sql, new { email });
+                  "FROM users WHERE email = @Email";
+        var userRow = await this.connection.QueryFirstOrDefaultAsync(sql, new { Email = email });
+
+        if (userRow == null) return null;
+
+        return new UserDbDto() {
+            id = userRow.id,
+            name = userRow.name,
+            email = userRow.email,
+            phone = userRow.phone,
+            passwordHash = userRow.password_hash,
+        };
+    }
+
+    public async Task<UserDbDto?> FindUserById(Guid userId)
+    {
+        var sql = "SELECT id, name, email, password_hash, phone " +
+                  "FROM users WHERE id = @Id";
+        var userRow = await this.connection.QueryFirstOrDefaultAsync(sql, new { Id = userId });
 
         if (userRow == null) return null;
 

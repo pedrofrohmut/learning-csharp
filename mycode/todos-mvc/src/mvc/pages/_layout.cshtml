@@ -18,30 +18,32 @@
   </head>
   <body>
 
-    <header>
-      <span class="logo">TodosMvc</span>
-      <nav>
-        <ul>
-          @if (! string.IsNullOrWhiteSpace(userId)) {
+    <header class="page-navbar">
+      <div class="page-container">
+        <a href="/" class="logo">TodosMvc</a>
+        <nav>
+          <ul>
+            @if (! string.IsNullOrWhiteSpace(userId)) {
             <li>
               <a href="/">Home</a>
             </li>
             <li>
               <a href="/users/signout">SignOut</a>
             </li>
-          } else {
+            } else {
             <li>
               <a href="/signup">SignUp</a>
             </li>
             <li>
               <a href="/signin">SignIn</a>
             </li>
-          }
-          <li>
-            <a href="/about">About</a>
-          </li>
-        </ul>
-      </nav>
+            }
+            <li>
+              <a href="/about">About</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
     <main>@RenderBody()</main>

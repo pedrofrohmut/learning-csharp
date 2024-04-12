@@ -1,6 +1,0 @@
-namespace TodosMvc.Core.Services;
-
-public interface ITokenService
-{
-    Task<string> CreateToken(string userId, string tokenSecret);
-}

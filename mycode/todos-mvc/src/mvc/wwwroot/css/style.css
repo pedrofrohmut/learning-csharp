@@ -83,7 +83,13 @@ h3 { font-size: 1.5rem }
 h4 { font-size: 1.1rem }
 
 a {
-    color: var(--white);
+    color: var(--purple);
+}
+
+p {
+    line-height: 1.1;
+    font-size: 1rem;
+    margin-bottom: 1.3em;
 }
 
 /* Buttons */
@@ -182,4 +188,50 @@ form button {
     border: 0;
     background-color: transparent;
     color: inherit;
+}
+
+/* Page Navbar */
+
+.page-navbar {
+    background-color: var(--gray-800);
+    color: var(--purple);
+    padding-block: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.page-navbar .page-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 1.6rem;
+}
+
+.page-navbar a {
+    color: var(--purple);
+    text-decoration: none;
+}
+
+/* Add Form */
+
+.add-form {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.add-form .btn {
+    margin: 0;
+}
+
+/* Goals List */
+
+.goals-title {
+    color: var(--gray-500);
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
 }

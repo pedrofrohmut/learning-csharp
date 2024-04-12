@@ -17,4 +17,9 @@ public static class ControllerUtils
     {
         return new ObjectResult("Unexpected Error: " + e.Message) { StatusCode = 500 };
     }
+
+    public static ObjectResult GetUnauthenticatedErrorResponse()
+    {
+        return new ObjectResult("There is no authenticated userId in the current session") { StatusCode = 403 };
+    }
 }
