@@ -10,10 +10,6 @@ using TodosMvc.Core.Adapters.Web;
 
 namespace TodosMvc.Mvc.Controllers;
 
-/*
-  TODO: discover how to log in/out with dotnet mvc without JS
-*/
-
 [Route("users")]
 public class UsersController : Controller
 {
@@ -101,7 +97,7 @@ public class UsersController : Controller
                 return RedirectToAction("SignInPage", "Pages");
             }
 
-	    // Add userId to session
+            // Add userId to session
             HttpContext.Session.SetString("authUserId", userId);
 
             return RedirectToAction("HomePage", "Pages");
@@ -116,7 +112,6 @@ public class UsersController : Controller
     public IActionResult SignOutUser()
     {
         HttpContext.Session.SetString("authUserId", "");
-        TempData["successMessage"] = "User signout successfully";
         return RedirectToAction("SignInPage", "Pages");
     }
 }

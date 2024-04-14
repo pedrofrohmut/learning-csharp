@@ -13,4 +13,9 @@
     <UserSecretsId>b645b526-49e3-4af5-9871-6718aaedf75b</UserSecretsId>
   </PropertyGroup>
 
+  <!-- <PropertyGroup> -->
+  <!--   <DebugType>portable</DebugType> -->
+  <!--   <DebugSymbols>true</DebugSymbols> -->
+  <!-- </PropertyGroup> -->
+
 </Project>

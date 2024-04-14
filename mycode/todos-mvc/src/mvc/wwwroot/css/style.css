@@ -103,6 +103,11 @@ p {
     border-radius: var(--border-radius);
 }
 
+.btn-small {
+    padding: 0.7em 1.1em;
+    font-size: 0.9rem;
+}
+
 /* Page */
 
 .page-container {
@@ -234,4 +239,36 @@ form button {
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 1.2rem;
+}
+
+.goals-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.goal-item {
+    background-color: var(--bDarkBlue);
+    color: var(--green);
+    font-size: 1.1rem;
+    padding: var(--box-padding);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.goal-item .content {
+    flex: 1;
+}
+
+.goal-item form {
+    width: fit-content;
+}
+
+.goal-item .btn {
+    margin: 0;
+    border: 1px solid var(--blue-100);
+    background-color: var(--blue-100);
+    color: var(--gray-500);
 }

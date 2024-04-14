@@ -1,4 +1,10 @@
+using System.Data;
 using Microsoft.AspNetCore.Mvc;
+using TodosMvc.Core.Adapters.Web;
+using TodosMvc.Core.Dtos;
+using TodosMvc.Core.UseCases.Goals;
+using TodosMvc.DataAccess;
+using TodosMvc.Mvc.Utils;
 
 namespace TodosMvc.Mvc.Controllers;
 
@@ -9,26 +15,51 @@ namespace TodosMvc.Mvc.Controllers;
 */
 public class PagesController : Controller
 {
-    [HttpGet("/")]
-    public IActionResult HomePage()
+    private readonly IConfiguration configuration;
+
+    public PagesController(IConfiguration configuration)
     {
-        ViewData["errorMessage"] = TempData["errorMessage"] as string;
-        ViewData["successMessage"] = TempData["successMessage"] as string;
+        this.configuration = configuration;
+    }
 
-        // string? authUserId = HttpContext.Session.GetString("authUserId");
-        // if (string.IsNullOrWhiteSpace(authUserId)) {
-        //     TempData["errorMessage"] = "You need to be logged in to access this page";
-        //     return RedirectToAction("SignInPage", "Pages");
-        // }
+    [HttpGet("/")]
+    public async Task<IActionResult> HomePage()
+    {
+        var authUserId = HttpContext.Session.GetString("authUserId");
+        if (string.IsNullOrWhiteSpace(authUserId)) {
+            return View("~/pages/index.cshtml");
+        }
 
-        return View("~/pages/index.cshtml");
+        var connectionManager = new ConnectionManager();
+        IDbConnection? connection = null;
+        try {
+            // Get connection
+            var connectionString = ControllerUtils.GetConnectionString(this.configuration);
+            connection = connectionManager.GetConnection(connectionString);
+
+            // Instance useCase and its deps
+            var userDataAccess = new UserDataAccess(connection);
+            var goalDataAccess = new GoalDataAccess(connection);
+            var listGoalsUseCase = new ListGoalsUseCase(userDataAccess, goalDataAccess);
+
+            var response = await GoalsWebAdapter.ListGoals(listGoalsUseCase, authUserId);
+
+            if (response.statusCode != 200 || response.body == null) {
+                ViewData["errorMessage"] = response.message;
+                return View("~/pages/index.cshtml");
+            }
+
+            List<GoalDbDto> goals = response.body!;
+
+            return View("~/pages/index.cshtml", new { goals });
+        } finally {
+            connectionManager.CloseConnection(connection);
+        }
     }
 
     [HttpGet("/about")]
     public IActionResult AboutPage()
     {
-        ViewData["errorMessage"] = TempData["errorMessage"] as string;
-        ViewData["successMessage"] = TempData["successMessage"] as string;
         return View("~/pages/about.cshtml");
     }
 

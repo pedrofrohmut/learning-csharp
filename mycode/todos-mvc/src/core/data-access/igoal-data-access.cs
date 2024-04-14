@@ -5,4 +5,5 @@ namespace TodosMvc.Core.DataAccess;
 public interface IGoalDataAccess
 {
     Task CreateGoal(CreateGoalDto newGoal, Guid userId);
+    Task<List<GoalDbDto>> FindAllGoalsByUserId(Guid userId);
 }

@@ -16,4 +16,14 @@ public static class GoalsWebAdapter
             return new WebAdaptedResponse() { statusCode = 400, message = e.Message };
         }
     }
+
+    public async static Task<WebAdaptedResponse> ListGoals(ListGoalsUseCase useCase, string authUserId)
+    {
+        try {
+            List<GoalDbDto> goals = await useCase.Execute(authUserId);
+            return new WebAdaptedResponse() { statusCode = 200, body = goals };
+        } catch (UserValidationException e) {
+            return new WebAdaptedResponse() { statusCode = 404, message = e.Message };
+        }
+    }
 }

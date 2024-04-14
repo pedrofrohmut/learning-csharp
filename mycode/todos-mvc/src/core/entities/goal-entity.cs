@@ -34,4 +34,10 @@ public static class GoalEntity
     {
         await goalDataAccess.CreateGoal(newGoal, userId);
     }
+
+    public async static Task<List<GoalDbDto>> ListGoals(Guid userId, IGoalDataAccess goalDataAccess)
+    {
+        var goals = await goalDataAccess.FindAllGoalsByUserId(userId);
+        return goals;
+    }
 }

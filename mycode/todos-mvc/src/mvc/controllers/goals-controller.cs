@@ -19,7 +19,7 @@ public class GoalsController : Controller
     }
 
     [HttpPost("add")]
-    public async Task<IActionResult> AddGoalAsync()
+    public async Task<IActionResult> AddGoal()
     {
         var authUserId = HttpContext.Session.GetString("authUserId");
         if (string.IsNullOrWhiteSpace(authUserId)) {

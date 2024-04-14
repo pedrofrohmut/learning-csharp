@@ -117,4 +117,12 @@ public static class UserEntity
         }
         return user.Value;
     }
+
+    public async static Task CheckUserExists(Guid userId, IUserDataAccess userDataAccess)
+    {
+        var user = await userDataAccess.FindUserById(userId);
+        if (user == null) {
+            throw new UserValidationException("User not found with the passed userId");
+        }
+    }
 }

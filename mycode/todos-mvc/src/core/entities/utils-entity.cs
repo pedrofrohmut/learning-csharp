@@ -4,7 +4,7 @@ namespace TodosMvc.Core.Entities;
 
 public static class UtilsEntity
 {
-    public static void ValidateId(string? id)
+    public static string ValidateId(string? id)
     {
         if (id == null) {
             throw new EntityValidationException("Id is null. Id is required and cannot be null.");
@@ -12,11 +12,12 @@ public static class UtilsEntity
         if (! Guid.TryParse(id.ToString(), out var _)) {
             throw new EntityValidationException("Id is not valid Guid format.");
         }
+        return id;
     }
 
-    public static void ValidateId(Guid? id)
+    public static string ValidateId(Guid? id)
     {
-        ValidateId(id.ToString());
+        return ValidateId(id.ToString());
     }
 
     public static Guid CastValidateId(string? id)
