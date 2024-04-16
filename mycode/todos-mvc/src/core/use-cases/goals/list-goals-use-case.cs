@@ -30,11 +30,6 @@ public class ListGoalsUseCase
             Console.WriteLine("[Info] Goals are NOT empty for this user");
         }
 
-        // if (goals.Count < 1) Console.WriteLine("The goals is EMPTY");
-        // foreach (var x in goals) {
-        //     Console.WriteLine("UseCase - Goal: " + x.text);
-        // }
-
         return goals;
     }
 }

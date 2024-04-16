@@ -40,4 +40,25 @@ public static class GoalEntity
         var goals = await goalDataAccess.FindAllGoalsByUserId(userId);
         return goals;
     }
+
+    public async static Task<GoalDbDto> CheckGoalExistsAndGet(Guid goalId, IGoalDataAccess goalDataAccess)
+    {
+        var goal = await goalDataAccess.FindGoalById(goalId);
+        if (goal == null) {
+            throw new GoalValidationException("Goal not found with the id passed");
+        }
+        return goal.Value;
+    }
+
+    public static void CheckGoalOwnership(GoalDbDto goal, Guid authUserId)
+    {
+        if (! string.Equals(goal.userId, authUserId)) {
+            throw new GoalValidationException("Goal does not belong to the authenticated user");
+        }
+    }
+
+    public async static Task DeleteGoal(Guid goalId, IGoalDataAccess goalDataAccess)
+    {
+        await goalDataAccess.DeleteGoal(goalId);
+    }
 }

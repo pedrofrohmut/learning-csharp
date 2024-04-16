@@ -38,4 +38,24 @@ public class GoalDataAccess : IGoalDataAccess
         }
         return goals;
     }
+
+    public async Task<GoalDbDto?> FindGoalById(Guid goalId)
+    {
+        var sql = "SELECT id, text, user_id, created_at FROM goals WHERE id = @GoalId";
+        var goalRow = await this.connection.QuerySingleAsync(sql, new { GoalId = goalId });
+        if (goalRow == null) return null;
+        var goal = new GoalDbDto() {
+            id = goalRow.id,
+            text = goalRow.text,
+            userId = goalRow.user_id,
+            createdAt = goalRow.created_at,
+        };
+        return goal;
+    }
+
+    public async Task DeleteGoal(Guid goalId)
+    {
+        var sql = "DELETE FROM goals WHERE id = @GoalId";
+        await this.connection.ExecuteAsync(sql, new { GoalId = goalId });
+    }
 }

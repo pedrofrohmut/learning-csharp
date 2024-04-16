@@ -25,6 +25,9 @@ public class PagesController : Controller
     [HttpGet("/")]
     public async Task<IActionResult> HomePage()
     {
+        ViewData["errorMessage"] = TempData["errorMessage"] as string;
+        ViewData["successMessage"] = TempData["successMessage"] as string;
+
         var authUserId = HttpContext.Session.GetString("authUserId");
         if (string.IsNullOrWhiteSpace(authUserId)) {
             return View("~/pages/index.cshtml");

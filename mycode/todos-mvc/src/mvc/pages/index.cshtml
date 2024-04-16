@@ -46,7 +46,8 @@
           @foreach (var goal in goals) {
             <div class="goal-item">
               <div class="content">@goal.text</div>
-              <form>
+              <form method="post" action="/goals/delete">
+                <input type="hidden" name="goalId" value="@goal.id">
                 <button class="btn btn-small">Delete</button>
               </form>
             </div>

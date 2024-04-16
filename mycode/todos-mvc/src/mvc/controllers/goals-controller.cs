@@ -59,8 +59,38 @@ public class GoalsController : Controller
     }
 
     [HttpPost("delete")]
-    public IActionResult DeleteGoal()
+    public async Task<IActionResult> DeleteGoal()
     {
-        return new ObjectResult("") { StatusCode = 204 };
+        var authUserId = HttpContext.Session.GetString("authUserId");
+        if (string.IsNullOrWhiteSpace(authUserId)) {
+            return ControllerUtils.GetUnauthenticatedErrorResponse();
+        }
+
+        string? goalId = Request.Form["goalId"];
+
+        var connectionManager = new ConnectionManager();
+        IDbConnection? connection = null;
+
+        try {
+            // Get connection
+            var connectionString = ControllerUtils.GetConnectionString(this.configuration);
+            connection = connectionManager.GetConnection(connectionString);
+            connectionManager.OpenConnection(connection);
+
+            // Instance useCase and its deps
+            var userDataAccess = new UserDataAccess(connection);
+            var goalDataAccess = new GoalDataAccess(connection);
+            var deleteGoalUseCase = new DeleteGoalUseCase(userDataAccess, goalDataAccess);
+
+            var response = await GoalsWebAdapter.DeleteGoal(deleteGoalUseCase, goalId, authUserId);
+
+            if (response.statusCode != 204) {
+                TempData["errorMessage"] = response.message;
+            }
+
+            return RedirectToAction("HomePage", "Pages");
+        } finally {
+            connectionManager.CloseConnection(connection);
+        }
     }
 }
