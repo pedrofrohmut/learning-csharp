@@ -25,9 +25,9 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CategoryModel>().HasData(
-	    new CategoryModel { CategoryId = 1, Name = "Action",  DisplayOrder = 1 },
-	    new CategoryModel { CategoryId = 2, Name = "SciFi",   DisplayOrder = 2 },
-	    new CategoryModel { CategoryId = 3, Name = "History", DisplayOrder = 3 }
-	);
+            new CategoryModel { CategoryId = 1, Name = "Action",  DisplayOrder = 1 },
+            new CategoryModel { CategoryId = 2, Name = "SciFi",   DisplayOrder = 2 },
+            new CategoryModel { CategoryId = 3, Name = "History", DisplayOrder = 3 }
+	    );
     }
 }
