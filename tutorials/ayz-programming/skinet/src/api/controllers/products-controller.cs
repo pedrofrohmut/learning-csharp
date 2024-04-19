@@ -1,6 +1,6 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Skinet.Infrastructure.Data;
+using Skinet.Core.Repositories;
 
 namespace Skinet.Api.Controllers;
 
@@ -8,26 +8,44 @@ namespace Skinet.Api.Controllers;
 [Route("api/products")]
 public class ProductsController : ControllerBase
 {
-    private readonly StoreDbContext dbContext;
+    private readonly IProductRepository productRepository;
+    private readonly IProductBrandRepository productBrandRepository;
+    private readonly IProductTypeRepository productTypeRepository;
 
-    public ProductsController(StoreDbContext dbContext)
+    public ProductsController(IProductRepository productRepository,
+                              IProductBrandRepository productBrandRepository,
+                              IProductTypeRepository productTypeRepository)
     {
-        this.dbContext = dbContext;
+        this.productRepository = productRepository;
+        this.productBrandRepository = productBrandRepository;
+        this.productTypeRepository = productTypeRepository;
     }
 
-    [HttpGet("all")]
+    [HttpGet("")]
     public async Task<IActionResult> GetAllProducts()
     {
-        if (this.dbContext.Products == null) return NotFound();
-        var products = await this.dbContext.Products.ToListAsync();
+        var products = await this.productRepository.GetProducts();
         return new ObjectResult(products) { StatusCode = 200 };
     }
 
-    [HttpGet("single/{productId}")]
+    [HttpGet("{productId}")]
     public async Task<IActionResult> GetSingleProduct([FromRoute] int productId)
     {
-        if (this.dbContext.Products == null) return NotFound();
-        var product = await this.dbContext.Products.FirstOrDefaultAsync(x => x.Id == productId);
+        var product = await this.productRepository.GetProductById(productId);
         return new ObjectResult(product) { StatusCode = 200 };
+    }
+
+    [HttpGet("brands")]
+    public async Task<IActionResult> GetAllProductBrands()
+    {
+        var brands = await this.productBrandRepository.GetProductBrands();
+        return new ObjectResult(brands) { StatusCode = 200 };
+    }
+
+    [HttpGet("types")]
+    public async Task<IActionResult> GetAllProductTypes()
+    {
+        var types = await this.productTypeRepository.GetProductTypes();
+        return new ObjectResult(types) { StatusCode = 200 };
     }
 }

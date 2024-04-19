@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Skinet.Core.Entities;
@@ -10,6 +11,8 @@ public class StoreDbContext : DbContext
     private readonly IConfiguration configuration;
 
     public DbSet<Product>? Products { get; set; }
+    public DbSet<ProductType>? ProductTypes { get; set; }
+    public DbSet<ProductBrand>? ProductBrands { get; set; }
 
     public StoreDbContext(DbContextOptions<StoreDbContext> options, IConfiguration configuration)
     : base (options)
@@ -25,9 +28,13 @@ public class StoreDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        var product1 = new Product() { Id = 1, Name = "Product 1" };
-        var product2 = new Product() { Id = 2, Name = "Product 2" };
-        var product3 = new Product() { Id = 3, Name = "Product 3" };
-        modelBuilder.Entity<Product>().HasData(product1, product2, product3);
+        // var product1 = new Product() { Id = 1, Name = "Product 1" };
+        // var product2 = new Product() { Id = 2, Name = "Product 2" };
+        // var product3 = new Product() { Id = 3, Name = "Product 3" };
+        // modelBuilder.Entity<Product>().HasData(product1, product2, product3);
+
+        base.OnModelCreating(modelBuilder);
+        // Add the ProductConfiguration rules
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }
