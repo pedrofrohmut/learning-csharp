@@ -8,9 +8,11 @@ using Skinet.Infrastructure.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IProductBrandRepository, ProductBrandRepository>();
-builder.Services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+// builder.Services.AddScoped<IProductRepository, ProductRepository>();
+// builder.Services.AddScoped<IProductBrandRepository, ProductBrandRepository>();
+// builder.Services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+builder.Services.AddScoped(typeof (IGenericRepository<>), typeof (GenericRepository<>));
+
 builder.Services.AddDbContext<StoreDbContext>(options => {
     options.UseNpgsql(MyUtils.GetConnectionString(builder.Configuration));
 });
