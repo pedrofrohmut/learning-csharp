@@ -1,5 +1,8 @@
+format:
+	dotnet format
+
 build:
-	cd src && dotnet build
+	dotnet build
 
 run:
 	cd src && dotnet run --project WebUI --launch-profile http

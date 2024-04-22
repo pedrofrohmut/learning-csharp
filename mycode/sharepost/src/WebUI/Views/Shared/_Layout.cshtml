@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>Sharepost - @ViewData["Title"]</title>
+
+    <meta name="description" content="Sharepost is a place where you can share content with the community in the form of post and interact with users in its comments" />
+    <meta name="keywords" content="Share, Posts, Community" />
+    <meta name="author" content="Pedro Frohmut (Aykham)" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Copyrights -->
+    <meta name="copyright" content="Copyright &copy; 2024 Pedro Frohmut (Aykham)" />
+  </head>
+  <body>
+
+    <!-- Header and Navbar -->
+    <header>
+      <h1>Shareposts</h1>
+      <nav>
+        <ul>
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/About">About</a>
+          </li>
+
+          <!-- User -->
+          <li>
+            <a href="/Users/SignIn">Sign In</a>
+          </li>
+          <li>
+            <a href="/Users/SignUp">Sign Up</a>
+          </li>
+
+          <!-- Posts -->
+          <li>
+            <a href="/Posts/Show/123">Show Post 123</a>
+          </li>
+          <li>
+            <a href="/Posts/List">List Posts</a>
+          </li>
+          <li>
+            <a href="/Posts/Add">Add Post</a>
+          </li>
+          <li>
+            <a href="/Posts/Edit">Edit Post</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>@RenderBody()</main>
+  </body>
+</html>
