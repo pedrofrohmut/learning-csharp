@@ -1,0 +1,54 @@
+@{
+  ViewData["Title"] = "Sign Up User";
+}
+<div class="page-container-small">
+  <div class="page-header">
+    <h1>Join Us</h1>
+    <p>Please fill up this form to register as a user and be part of our community</p>
+  </div>
+
+  <form method="POST" action="/Users/SignUp" class="form">
+    <!-- Name -->
+    <div class="form-group">
+      <label>Name</label>
+      <input name="name" type="text" class="form-input" />
+      <!-- TODO: Add error message here -->
+    </div>
+
+    <!-- E-mail -->
+    <div class="form-group">
+      <label>E-mail</label>
+      <input name="email" type="text" class="form-input" />
+      <!-- TODO: Add error message here -->
+    </div>
+
+    <!-- Phone -->
+    <div class="form-group">
+      <label>Phone</label>
+      <input name="phone" type="text" class="form-input" />
+      <!-- TODO: Add error message here -->
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label>Password</label>
+      <input name="password" type="password" class="form-input" />
+      <!-- TODO: Add error message here -->
+    </div>
+
+    <!-- Confirm Password -->
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input name="confirm_password" type="password" class="form-input" />
+      <!-- TODO: Add error message here -->
+    </div>
+
+    <!-- Terms Check -->
+    <div class="form-group terms">
+      <input id="terms" name="terms" type="checkbox" />
+      <label for="terms">I agree to the <a href="#">Terms and Conditions</a></label>
+    </div>
+
+    <button class="btn btn-primary">Submit</button>
+  </form>
+</div>
