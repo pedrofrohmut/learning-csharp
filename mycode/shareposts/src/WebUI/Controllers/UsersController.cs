@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Shareposts.Core.Dtos.UseCases;
 using Shareposts.Utils;
 using Shareposts.DataAccess;
+using Shareposts.Services;
+using Shareposts.Core.UseCases.Users;
+using Shareposts.Core.Adapters.Web;
 
 namespace Shareposts.WebUI.Controllers;
 
@@ -41,8 +44,18 @@ public class UsersController : Controller
             connection = connectionManager.GetConnection(connectionString);
             connectionManager.OpenConnection(connection);
 
-            Console.WriteLine("Connection Working Successfully");
+            var userDataAccess = new UserDataAccess(connection);
+            var passwordService = new PasswordService();
+            var signUpUserUseCase = new SignUpUserUseCase(userDataAccess, passwordService);
 
+            var response = await UsersWebAdapter.SignUpUser(signUpUserUseCase, newUser);
+
+            if (response.statusCode != 201) {
+                TempData["errorMessage"] = response.message;
+                return RedirectToAction("SignUpUserPage", "Pages");
+            }
+
+            TempData["successMessage"] = "User created successfully";
             return RedirectToAction("SignInUserPage", "Pages");
         } finally {
             connectionManager.CloseConnection(connection);
