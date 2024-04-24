@@ -27,7 +27,7 @@ public static class UserEntity
         if (string.IsNullOrWhiteSpace(email)) {
             throw new UserValidationException("E-mail not provided. E-mail is required and cannot be null or blank.");
         }
-        if (!email.Contains("@") || !email.Contains(".")) {
+        if (! email.Contains("@") || ! email.Contains(".")) {
             throw new UserValidationException(
                 "E-mail is not in a valid format. E-mail pattern must contain both @ and .");
         }

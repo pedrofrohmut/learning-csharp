@@ -1,5 +1,6 @@
 using System.Data;
 using System.Threading.Tasks;
+using Dapper;
 using Shareposts.Core.DataAccess;
 using Shareposts.Core.Dtos.Db;
 using Shareposts.Core.Dtos.UseCases;
@@ -15,13 +16,34 @@ public class UserDataAccess : IUserDataAccess
         this.connection = connection;
     }
 
-    public Task<UserDbDto?> FindUserByEmail(string email)
+    private UserDbDto MapUserRowToDto(dynamic userRow) => new UserDbDto() {
+        id = userRow.id,
+        name = userRow.name,
+        email = userRow.email,
+        phone = userRow.phone,
+        passwordHash = userRow.password_hash,
+        createdAt = userRow.created_at
+    };
+
+    public async Task<UserDbDto?> FindUserByEmail(string email)
     {
-        throw new System.NotImplementedException();
+        var sql = "SELECT id, name, email, phone, password_hash FROM users WHERE email = @Email";
+        var userRow = await this.connection.QueryFirstOrDefaultAsync(sql, new { @Email = email });
+        if (userRow == null) {
+            return null;
+        }
+        return MapUserRowToDto(userRow);
     }
 
-    public Task CreateUser(CreateUserDto newUser, string passwordHash)
+    public async Task CreateUser(CreateUserDto newUser, string passwordHash)
     {
-        throw new System.NotImplementedException();
+        var sql = "INSERT INTO users (name, email, phone, password_hash)" +
+                  "VALUES (@Name, @Email, @Phone, @PasswordHash)";
+        await this.connection.ExecuteAsync(sql, new {
+            @Name = newUser.name,
+            @Email = newUser.email,
+            @Phone = newUser.phone,
+            @PasswordHash = passwordHash
+        });
     }
 }
