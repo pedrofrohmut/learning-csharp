@@ -9,12 +9,12 @@ namespace Shareposts.Core.UseCases.Users;
 
 public class SignUpUserUseCase
 {
-    private readonly IUserDataAccess userDataAccess;
+    private readonly IUsersDataAccess usersDataAccess;
     private readonly IPasswordService passwordService;
 
-    public SignUpUserUseCase(IUserDataAccess userDataAccess, IPasswordService passwordService)
+    public SignUpUserUseCase(IUsersDataAccess usersDataAccess, IPasswordService passwordService)
     {
-        this.userDataAccess = userDataAccess;
+        this.usersDataAccess = usersDataAccess;
         this.passwordService = passwordService;
     }
 
@@ -23,13 +23,13 @@ public class SignUpUserUseCase
         UserEntity.ValidateUser(newUser);
         Console.WriteLine("[Info] New User is valid");
 
-        await UserEntity.CheckEmailAvailable(newUser.email!, this.userDataAccess);
+        await UserEntity.CheckEmailAvailable(newUser.email!, this.usersDataAccess);
         Console.WriteLine("[Info] E-mail is available");
 
         var passwordHash = await UserEntity.HashPassword(newUser.password!, this.passwordService);
         Console.WriteLine("[Info] Password hashed");
 
-        await UserEntity.CreateUser(newUser, passwordHash, this.userDataAccess);
+        await UserEntity.CreateUser(newUser, passwordHash, this.usersDataAccess);
         Console.WriteLine("[Info] User created");
     }
 }

@@ -7,11 +7,11 @@ using Shareposts.Core.Dtos.UseCases;
 
 namespace Shareposts.DataAccess;
 
-public class UserDataAccess : IUserDataAccess
+public class UsersDataAccess : IUsersDataAccess
 {
     private readonly IDbConnection connection;
 
-    public UserDataAccess(IDbConnection connection)
+    public UsersDataAccess(IDbConnection connection)
     {
         this.connection = connection;
     }

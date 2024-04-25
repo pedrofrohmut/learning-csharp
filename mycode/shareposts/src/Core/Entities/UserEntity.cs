@@ -68,9 +68,9 @@ public static class UserEntity
         UserEntity.ValidatePassword(newUser.password);
     }
 
-    public static async Task CheckEmailAvailable(string email, IUserDataAccess userDataAccess)
+    public static async Task CheckEmailAvailable(string email, IUsersDataAccess usersDataAccess)
     {
-        var user = await userDataAccess.FindUserByEmail(email);
+        var user = await usersDataAccess.FindUserByEmail(email);
         if (user != null) {
             throw new UserEmailAlreadyRegisteredException();
         }
@@ -81,8 +81,8 @@ public static class UserEntity
         return await passwordService.HashPassword(password);
     }
 
-    public static async Task CreateUser(CreateUserDto newUser, string passwordHash, IUserDataAccess userDataAccess)
+    public static async Task CreateUser(CreateUserDto newUser, string passwordHash, IUsersDataAccess usersDataAccess)
     {
-        await userDataAccess.CreateUser(newUser, passwordHash);
+        await usersDataAccess.CreateUser(newUser, passwordHash);
     }
 }

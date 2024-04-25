@@ -44,9 +44,9 @@ public class UsersController : Controller
             connection = connectionManager.GetConnection(connectionString);
             connectionManager.OpenConnection(connection);
 
-            var userDataAccess = new UserDataAccess(connection);
+            var usersDataAccess = new UsersDataAccess(connection);
             var passwordService = new PasswordService();
-            var signUpUserUseCase = new SignUpUserUseCase(userDataAccess, passwordService);
+            var signUpUserUseCase = new SignUpUserUseCase(usersDataAccess, passwordService);
 
             var response = await UsersWebAdapter.SignUpUser(signUpUserUseCase, newUser);
 
