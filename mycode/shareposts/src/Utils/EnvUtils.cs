@@ -8,4 +8,9 @@ public static class EnvUtils
         string password = Secrets.databasePassword;
         return $"Host=localhost; Port=5010; Username={username}; Password={password}; Database=shareposts_db";
     }
+
+    public static string GetJwtSecret()
+    {
+        return Secrets.jwtSecret;
+    }
 }

@@ -36,6 +36,7 @@ public class UsersController : Controller
         var connectionManager = new ConnectionManager();
         try {
             var connectionString = EnvUtils.GetConnectionString();
+
             connection = connectionManager.GetConnection(connectionString);
             connectionManager.OpenConnection(connection);
 
@@ -52,6 +53,44 @@ public class UsersController : Controller
 
             TempData["successMessage"] = "User created successfully";
             return RedirectToAction("SignInUserPage", "Pages");
+        } finally {
+            connectionManager.CloseConnection(connection);
+        }
+    }
+
+    [HttpPost("SignIn")]
+    public async Task<IActionResult> SignInUser()
+    {
+        var credentials = new UserCredentialsDto() {
+            email = Request.Form["email"],
+            password = Request.Form["password"]
+        };
+
+        Console.WriteLine("Email: " + credentials.email);
+        Console.WriteLine("Password: " + credentials.password);
+
+        IDbConnection? connection = null;
+        var connectionManager = new ConnectionManager();
+        try {
+            var connectionString = EnvUtils.GetConnectionString();
+            var jwtSecret = EnvUtils.GetJwtSecret();
+
+            connection = connectionManager.GetConnection(connectionString);
+            connectionManager.OpenConnection(connection);
+
+            var usersDataAccess = new UsersDataAccess(connection);
+            var passwordService = new PasswordService();
+            var jwtService = new JwtService(jwtSecret);
+            var signInUserUseCase = new SignInUserUseCase(usersDataAccess, passwordService, jwtService);
+
+            var response = await UsersWebAdapter.SignInUser(signInUserUseCase, credentials);
+
+            if (response.statusCode != 200) {
+                TempData["errorMessage"] = response.message;
+                return RedirectToAction("SignInUserPage", "Pages");
+            }
+
+            return RedirectToAction("HomePage", "Pages");
         } finally {
             connectionManager.CloseConnection(connection);
         }

@@ -10,4 +10,10 @@ public class PasswordService : IPasswordService
     {
         return Task.FromResult(BC.HashPassword(password));
     }
+
+    public Task<bool> VerifyPasswordAndHash(string password, string passwordHash)
+    {
+        var areMatch = BC.Verify(password, passwordHash);
+        return Task.FromResult(areMatch);
+    }
 }

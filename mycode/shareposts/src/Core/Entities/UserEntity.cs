@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Shareposts.Core.Dtos.UseCases;
+using Shareposts.Core.Dtos.Db;
 using Shareposts.Core.Exceptions;
 using Shareposts.Core.DataAccess;
 using Shareposts.Core.Services;
@@ -68,6 +69,12 @@ public static class UserEntity
         UserEntity.ValidatePassword(newUser.password);
     }
 
+    public static void ValidateUser(UserCredentialsDto credentials)
+    {
+        UserEntity.ValidateEmail(credentials.email);
+        UserEntity.ValidatePassword(credentials.password);
+    }
+
     public static async Task CheckEmailAvailable(string email, IUsersDataAccess usersDataAccess)
     {
         var user = await usersDataAccess.FindUserByEmail(email);
@@ -81,8 +88,32 @@ public static class UserEntity
         return await passwordService.HashPassword(password);
     }
 
-    public static async Task CreateUser(CreateUserDto newUser, string passwordHash, IUsersDataAccess usersDataAccess)
+    public static async Task CreateUser(
+        CreateUserDto newUser, string passwordHash, IUsersDataAccess usersDataAccess)
     {
         await usersDataAccess.CreateUser(newUser, passwordHash);
+    }
+
+    public static async Task<UserDbDto> CheckUserExists(string email, IUsersDataAccess usersDataAccess)
+    {
+        var user = await usersDataAccess.FindUserByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user.Value;
+    }
+
+    public static async Task CheckPasswordMatches(
+        string password, string passwordHash, IPasswordService passwordService)
+    {
+        var areMatch = await passwordService.VerifyPasswordAndHash(password, passwordHash);
+        if (! areMatch) {
+            throw new PasswordDoesntMatchUserException();
+        }
+    }
+
+    public static async Task<string> CreateJwt(string userId, IJwtService jwtService)
+    {
+        return await jwtService.CreateJwt(userId);
     }
 }
