@@ -32,11 +32,6 @@ public class UsersController : Controller
             password = Request.Form["password"]
         };
 
-        Console.WriteLine("Name: " + newUser.name);
-        Console.WriteLine("E-mail: " + newUser.email);
-        Console.WriteLine("Phone: " + newUser.phone);
-        Console.WriteLine("Password: " + newUser.password);
-
         IDbConnection? connection = null;
         var connectionManager = new ConnectionManager();
         try {
