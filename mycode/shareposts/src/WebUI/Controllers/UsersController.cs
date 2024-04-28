@@ -90,6 +90,11 @@ public class UsersController : Controller
                 return RedirectToAction("SignInUserPage", "Pages");
             }
 
+            Console.WriteLine("Id: " + response.body?.userId);
+            Console.WriteLine("Name: " + response.body?.name);
+            Console.WriteLine("Email: " + response.body?.email);
+            Console.WriteLine("Token: " + response.body?.authenticationToken);
+
             return RedirectToAction("HomePage", "Pages");
         } finally {
             connectionManager.CloseConnection(connection);

@@ -32,6 +32,9 @@ public class SignInUserUseCase
         await UserEntity.CheckPasswordMatches(credentials.password!, user.passwordHash!, this.passwordService);
         Console.WriteLine("[Info] User password hash matches this password");
 
+        MainEntity.ValidateId(user.id);
+        Console.WriteLine("[Info] User id is a valid Guid");
+
         var token = await UserEntity.CreateJwt(user.id!, this.jwtService);
         Console.WriteLine("[Info] Json Web Token created for this user");
 

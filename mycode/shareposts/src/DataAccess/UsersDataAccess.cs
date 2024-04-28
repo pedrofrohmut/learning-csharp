@@ -17,7 +17,7 @@ public class UsersDataAccess : IUsersDataAccess
     }
 
     private UserDbDto MapUserRowToDto(dynamic userRow) => new UserDbDto() {
-        id = userRow.id,
+        id = userRow.id.ToString(),
         name = userRow.name,
         email = userRow.email,
         phone = userRow.phone,
@@ -27,7 +27,8 @@ public class UsersDataAccess : IUsersDataAccess
 
     public async Task<UserDbDto?> FindUserByEmail(string email)
     {
-        var sql = "SELECT id, name, email, phone, password_hash FROM users WHERE email = @Email";
+        var sql = "SELECT id, name, email, phone, password_hash, created_at " +
+                  "FROM users WHERE email = @Email";
         var userRow = await this.connection.QueryFirstOrDefaultAsync(sql, new { @Email = email });
         if (userRow == null) {
             return null;
