@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Shareposts.Core.Dtos.UseCases;
 using Shareposts.Utils;
@@ -66,9 +67,6 @@ public class UsersController : Controller
             password = Request.Form["password"]
         };
 
-        Console.WriteLine("Email: " + credentials.email);
-        Console.WriteLine("Password: " + credentials.password);
-
         IDbConnection? connection = null;
         var connectionManager = new ConnectionManager();
         try {
@@ -90,14 +88,29 @@ public class UsersController : Controller
                 return RedirectToAction("SignInUserPage", "Pages");
             }
 
-            Console.WriteLine("Id: " + response.body?.userId);
-            Console.WriteLine("Name: " + response.body?.name);
-            Console.WriteLine("Email: " + response.body?.email);
-            Console.WriteLine("Token: " + response.body?.authenticationToken);
+            var cookieOptions = new CookieOptions() {
+                Expires = DateTime.UtcNow.AddDays(7),
+                IsEssential = true,
+            };
+            Response.Cookies.Append("userId", response.body?.userId);
+            Response.Cookies.Append("name", response.body?.name);
+            Response.Cookies.Append("email", response.body?.email);
+            Response.Cookies.Append("token", response.body?.token);
 
             return RedirectToAction("HomePage", "Pages");
         } finally {
             connectionManager.CloseConnection(connection);
         }
+    }
+
+    [HttpGet("SignOut")]
+    public IActionResult SignOutUser()
+    {
+        Response.Cookies.Delete("userId");
+        Response.Cookies.Delete("name");
+        Response.Cookies.Delete("email");
+        Response.Cookies.Delete("token");
+
+        return RedirectToAction("SignInUserPage", "Pages");
     }
 }

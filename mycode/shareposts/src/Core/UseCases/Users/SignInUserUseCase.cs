@@ -42,7 +42,7 @@ public class SignInUserUseCase
             userId = user.id!,
             name = user.name!,
             email = user.email!,
-            authenticationToken = token
+            token = token
         };
     }
 }

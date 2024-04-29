@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Shareposts.WebUI.Controllers;
@@ -16,6 +17,12 @@ public class PagesController : Controller
     [Route("/Home")]
     public IActionResult HomePage()
     {
+        var userId = Request.Cookies["userId"];
+        if (string.IsNullOrWhiteSpace(userId)) {
+            TempData["errorMessage"] = "You must be logged in to access this page";
+            return RedirectToAction("SignInUserPage", "Pages");
+        }
+
         SetMessagesToViewData();
         return View("~/Views/Index.cshtml");
     }

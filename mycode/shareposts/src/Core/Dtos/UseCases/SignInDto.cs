@@ -5,5 +5,5 @@ public struct SignInDto
     public string userId;
     public string name;
     public string email;
-    public string authenticationToken;
+    public string token;
 }
