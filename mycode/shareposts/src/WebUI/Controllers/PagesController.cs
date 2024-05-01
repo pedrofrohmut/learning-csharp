@@ -1,5 +1,5 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
+using Shareposts.WebUI.Utils;
 
 namespace Shareposts.WebUI.Controllers;
 
@@ -17,12 +17,6 @@ public class PagesController : Controller
     [Route("/Home")]
     public IActionResult HomePage()
     {
-        var userId = Request.Cookies["userId"];
-        if (string.IsNullOrWhiteSpace(userId)) {
-            TempData["errorMessage"] = "You must be logged in to access this page";
-            return RedirectToAction("SignInUserPage", "Pages");
-        }
-
         SetMessagesToViewData();
         return View("~/Views/Index.cshtml");
     }
@@ -37,6 +31,12 @@ public class PagesController : Controller
     [HttpGet("/Users/SignIn")]
     public IActionResult SignInUserPage()
     {
+        var (isNotAuthenticated, action, controller) =
+            ControllerUtils.IsNotAuthenticatedOrRedirect(Request, TempData);
+        if (! isNotAuthenticated) {
+            return RedirectToAction(action, controller);
+        }
+
         SetMessagesToViewData();
         return View("~/Views/SignInUser.cshtml");
     }
@@ -44,6 +44,12 @@ public class PagesController : Controller
     [HttpGet("/Users/SignUp")]
     public IActionResult SignUpUserPage()
     {
+        var (isNotAuthenticated, action, controller) =
+            ControllerUtils.IsNotAuthenticatedOrRedirect(Request, TempData);
+        if (! isNotAuthenticated) {
+            return RedirectToAction(action, controller);
+        }
+
         SetMessagesToViewData();
         return View("~/Views/SignUpUser.cshtml");
     }
@@ -55,23 +61,28 @@ public class PagesController : Controller
         return View("~/Views/ShowPost.cshtml");
     }
 
-    [HttpGet("/Posts/List")]
-    public IActionResult PostsListPage()
-    {
-        SetMessagesToViewData();
-        return View("~/Views/ListPosts.cshtml");
-    }
-
     [HttpGet("/Posts/Add")]
     public IActionResult AddPostPage()
     {
+        var (isAuthenticated, action, controller) =
+            ControllerUtils.IsAuthenticatedOrRedirect(Request, TempData);
+        if (! isAuthenticated) {
+            return RedirectToAction(action, controller);
+        }
+
         SetMessagesToViewData();
         return View("~/Views/AddPost.cshtml");
     }
 
-    [HttpGet("/Posts/Edit")]
+    [HttpGet("/Posts/Edit/{postId}")]
     public IActionResult EditPostPage()
     {
+        var (isAuthenticated, action, controller) =
+            ControllerUtils.IsAuthenticatedOrRedirect(Request, TempData);
+        if (! isAuthenticated) {
+            return RedirectToAction(action, controller);
+        }
+
         SetMessagesToViewData();
         return View("~/Views/EditPost.cshtml");
     }

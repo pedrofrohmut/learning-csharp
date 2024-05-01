@@ -10,6 +10,7 @@ using Shareposts.DataAccess;
 using Shareposts.Services;
 using Shareposts.Core.UseCases.Users;
 using Shareposts.Core.Adapters.Web;
+using Shareposts.WebUI.Utils;
 
 namespace Shareposts.WebUI.Controllers;
 
@@ -26,6 +27,12 @@ public class UsersController : Controller
     [HttpPost("SignUp")]
     public async Task<IActionResult> SignUpUser()
     {
+        var (isNotAuthenticated, action, controller) =
+            ControllerUtils.IsNotAuthenticatedOrRedirect(Request, TempData);
+        if (! isNotAuthenticated) {
+            return RedirectToAction(action, controller);
+        }
+
         var newUser = new CreateUserDto() {
             name = Request.Form["name"],
             email = Request.Form["email"],
@@ -62,6 +69,12 @@ public class UsersController : Controller
     [HttpPost("SignIn")]
     public async Task<IActionResult> SignInUser()
     {
+        var (isNotAuthenticated, action, controller) =
+            ControllerUtils.IsNotAuthenticatedOrRedirect(Request, TempData);
+        if (! isNotAuthenticated) {
+            return RedirectToAction(action, controller);
+        }
+
         var credentials = new UserCredentialsDto() {
             email = Request.Form["email"],
             password = Request.Form["password"]
@@ -106,6 +119,12 @@ public class UsersController : Controller
     [HttpGet("SignOut")]
     public IActionResult SignOutUser()
     {
+        var (isAuthenticated, action, controller) =
+            ControllerUtils.IsAuthenticatedOrRedirect(Request, TempData);
+        if (! isAuthenticated) {
+            return RedirectToAction(action, controller);
+        }
+
         Response.Cookies.Delete("userId");
         Response.Cookies.Delete("name");
         Response.Cookies.Delete("email");

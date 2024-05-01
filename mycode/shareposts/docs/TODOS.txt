@@ -1,0 +1,7 @@
+
+- 2024-04-29:
+    [] - Make a page that list only current user posts (My Posts)
+    [] - Make all post in MyPosts have edit and delete buttons
+
+- 2024-05-01:
+    [] - Check if call replace WebAdaptedResponse for a tuple (statusCode, object)

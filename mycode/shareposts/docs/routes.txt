@@ -1,0 +1,22 @@
+Pages:
+    +  [GET] /, /Home         -> HomePage
+    +  [GET] /About           -> AboutPage
+    +  [GET] /Users/SignIn    -> SignInUserPage
+    +  [GET] /Users/SignUp    -> SignUpUserPage
+    +  [GET] /Posts/Show/{id} -> ShowPostPage
+    +  [GET] /Posts/List      -> PostsListPage
+    -  [GET] /Posts/Add       -> AddPostPage
+    -  [GET] /Posts/Edit      -> EditPostPage
+
+Users:
+    +  [POST] /Users/SignUp  -> SignUpUser
+    +  [POST] /Users/SignIn  -> SignInUser
+    -  [GET]  /Users/SignOut -> SignOutUser
+
+Posts:
+    -t [POST] /Posts/Add -> AddPost
+
+* authentication indicators:
+    + public
+    - required auth cookie present (light check)
+    - required auth cookie with token and validate token (havier check)
