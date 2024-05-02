@@ -12,7 +12,7 @@ public class PostsController : Controller
     [HttpPost("Add")]
     public async Task<IActionResult> AddPost()
     {
-        var (isAuthenticated, action, controller) =
+        var (isAuthenticated, action, controller, userId) =
             await ControllerUtils.IsAuthenticatedWithTokenOrRedirect(Request, TempData);
         if (! isAuthenticated) {
             return RedirectToAction(action, controller);
@@ -23,6 +23,7 @@ public class PostsController : Controller
             body = Request.Form["body"]
         };
 
+        Console.WriteLine("AuthUserId: " + userId);
         Console.WriteLine("Title: " + newPost.title);
         Console.WriteLine("Body: " + newPost.body);
 

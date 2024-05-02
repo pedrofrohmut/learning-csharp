@@ -19,39 +19,33 @@ public static class ControllerUtils
     public const string invalidAuthTokenErrorMessage =
         "Your authentication token is either invalid or expired";
 
-    public static string? GetAuthUserId(HttpRequest request)
-    {
-        return request.Cookies["userId"];
-    }
-
-    public static async Task<(bool, string?, string?)> IsAuthenticatedWithTokenOrRedirect(
+    public static async Task<(bool, string?, string?, string?)> IsAuthenticatedWithTokenOrRedirect(
         HttpRequest request, ITempDataDictionary tempData)
     {
-        var userId = request.Cookies["userId"];
-        var token = request.Cookies["token"];
+        var token = request.Cookies["authToken"];
 
-        if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(token)) {
+        if (string.IsNullOrWhiteSpace(token)) {
             tempData["errorMessage"] = ControllerUtils.actionSignInErrorMessage;
-            return (false, "SignInUserPage", "Pages");
+            return (false, "SignInUserPage", "Pages", null);
         }
 
         var jwtSecret = EnvUtils.GetJwtSecret();
         var jwtService = new JwtService(jwtSecret);
-        var isValidJwt = await jwtService.ValidateToken(token);
+        var (isValidJwt, userId) = await jwtService.ValidateToken(token);
 
         if (! isValidJwt) {
             tempData["errorMessage"] = ControllerUtils.invalidAuthTokenErrorMessage;
-            return (false, "SignOutUser", "Users");
+            return (false, "SignOutUser", "Users", null);
         }
 
-        return (true, null, null);
+        return (true, null, null, userId);
     }
 
     public static (bool, string?, string?) IsAuthenticatedOrRedirect(
         HttpRequest request, ITempDataDictionary tempData)
     {
-        var userId = request.Cookies["userId"];
-        if (string.IsNullOrWhiteSpace(userId)) {
+        var token = request.Cookies["authToken"];
+        if (string.IsNullOrWhiteSpace(token)) {
             tempData["errorMessage"] = ControllerUtils.actionSignInErrorMessage;
             return (false, "SignInUserPage", "Pages");
         }
@@ -61,8 +55,8 @@ public static class ControllerUtils
     public static (bool, string?, string?) IsNotAuthenticatedOrRedirect(
         HttpRequest request, ITempDataDictionary tempData)
     {
-        var userId = request.Cookies["userId"];
-        if (! string.IsNullOrWhiteSpace(userId)) {
+        var token = request.Cookies["authToken"];
+        if (! string.IsNullOrWhiteSpace(token)) {
             tempData["errorMessage"] = ControllerUtils.actionAlreadySignedInErrorMessage;
             return (false, "HomePage", "Pages");
         }

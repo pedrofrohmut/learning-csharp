@@ -5,5 +5,5 @@ namespace Shareposts.Core.Services;
 public interface IJwtService
 {
     Task<string> CreateJwt(string userId);
-    Task<bool> ValidateToken(string token);
+    Task<(bool, string)> ValidateToken(string token);
 }

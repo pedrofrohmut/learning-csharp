@@ -105,10 +105,7 @@ public class UsersController : Controller
                 Expires = DateTime.UtcNow.AddDays(7),
                 IsEssential = true,
             };
-            Response.Cookies.Append("userId", response.body?.userId);
-            Response.Cookies.Append("name", response.body?.name);
-            Response.Cookies.Append("email", response.body?.email);
-            Response.Cookies.Append("token", response.body?.token);
+            Response.Cookies.Append("authToken", response.body?.token);
 
             return RedirectToAction("HomePage", "Pages");
         } finally {
@@ -125,10 +122,7 @@ public class UsersController : Controller
             return RedirectToAction(action, controller);
         }
 
-        Response.Cookies.Delete("userId");
-        Response.Cookies.Delete("name");
-        Response.Cookies.Delete("email");
-        Response.Cookies.Delete("token");
+        Response.Cookies.Delete("authToken");
 
         return RedirectToAction("SignInUserPage", "Pages");
     }

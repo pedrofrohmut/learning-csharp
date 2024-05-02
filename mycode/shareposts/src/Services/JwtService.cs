@@ -33,7 +33,7 @@ public class JwtService : IJwtService
         return Task.FromResult(token);
     }
 
-    public Task<bool> ValidateToken(string token)
+    public Task<(bool, string)> ValidateToken(string token)
     {
         var signinKey = SymmetricJwk.FromBase64Url(this.secret);
 
@@ -45,14 +45,18 @@ public class JwtService : IJwtService
                 .Build();
 
         var ok = Jwt.TryParse(token, policy, out var decoded);
+        if (! ok) {
+            return Task.FromResult((false, ""));
+        }
 
-        // System.Console.WriteLine("Decoded token: " + decoded);
-        // System.Console.WriteLine("Decoded token payload: " + decoded.Payload);
-        // System.Console.WriteLine("Decoded token userId: " + decoded.Payload["userId"]);
+        string? userId = decoded.Payload?["userId"].ToString();
+        if (userId == null) {
+            return Task.FromResult((false, ""));
+        }
 
         // Don't forget to dispose decoded or you get GC problems
         decoded.Dispose();
 
-        return Task.FromResult(ok);
+        return Task.FromResult((true, userId));
     }
 }
