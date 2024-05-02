@@ -26,7 +26,7 @@ public class SignInUserUseCase
         UserEntity.ValidateUser(credentials);
         Console.WriteLine("[Info] New User is valid");
 
-        var user = await UserEntity.CheckUserExists(credentials.email!, this.usersDataAccess);
+        var user = await UserEntity.CheckUserExistsByEmail(credentials.email!, this.usersDataAccess);
         Console.WriteLine("[Info] User with this e-mail exists");
 
         await UserEntity.CheckPasswordMatches(credentials.password!, user.passwordHash!, this.passwordService);

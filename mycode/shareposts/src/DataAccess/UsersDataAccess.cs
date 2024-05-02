@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
@@ -30,6 +31,17 @@ public class UsersDataAccess : IUsersDataAccess
         var sql = "SELECT id, name, email, phone, password_hash, created_at " +
                   "FROM users WHERE email = @Email";
         var userRow = await this.connection.QueryFirstOrDefaultAsync(sql, new { @Email = email });
+        if (userRow == null) {
+            return null;
+        }
+        return MapUserRowToDto(userRow);
+    }
+
+    public async Task<UserDbDto?> FindUserById(Guid userId)
+    {
+        var sql = "SELECT id, name, email, phone, password_hash, created_at " +
+                  "FROM users WHERE id = @UserId";
+        var userRow = await this.connection.QueryFirstOrDefaultAsync(sql, new { @UserId = userId });
         if (userRow == null) {
             return null;
         }

@@ -5,6 +5,7 @@ using Shareposts.Core.Dtos.Db;
 using Shareposts.Core.Exceptions;
 using Shareposts.Core.DataAccess;
 using Shareposts.Core.Services;
+using System;
 
 namespace Shareposts.Core.Entities;
 
@@ -94,9 +95,18 @@ public static class UserEntity
         await usersDataAccess.CreateUser(newUser, passwordHash);
     }
 
-    public static async Task<UserDbDto> CheckUserExists(string email, IUsersDataAccess usersDataAccess)
+    public static async Task<UserDbDto> CheckUserExistsByEmail(string email, IUsersDataAccess usersDataAccess)
     {
         var user = await usersDataAccess.FindUserByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user.Value;
+    }
+
+    public static async Task<UserDbDto> CheckUserExistsById(Guid userId, IUsersDataAccess usersDataAccess)
+    {
+        var user = await usersDataAccess.FindUserById(userId);
         if (user == null) {
             throw new UserNotFoundException();
         }
