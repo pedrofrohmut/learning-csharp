@@ -1,4 +1,10 @@
+using System.Data;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Shareposts.Core.Adapters.Web;
+using Shareposts.Core.UseCases.Posts;
+using Shareposts.DataAccess;
+using Shareposts.Utils;
 using Shareposts.WebUI.Utils;
 
 namespace Shareposts.WebUI.Controllers;
@@ -15,10 +21,30 @@ public class PagesController : Controller
     [HttpGet]
     [Route("/")]
     [Route("/Home")]
-    public IActionResult HomePage()
+    public async Task<IActionResult> HomePage()
     {
         SetMessagesToViewData();
-        return View("~/Views/Index.cshtml");
+
+        var connectionManager = new ConnectionManager();
+        IDbConnection? connection = null;
+        try {
+            var connectionString = EnvUtils.GetConnectionString();
+            connection = connectionManager.GetConnection(connectionString);
+            connectionManager.OpenConnection(connection);
+
+            var postsDataAccess = new PostsDataAccess(connection);
+            var listPostsUseCase = new ListPostsUseCase(postsDataAccess);
+
+            var response = await PostsWebAdapter.ListPosts(listPostsUseCase);
+
+            if (response.statusCode != 200) {
+                ViewData["errorMessage"] = response.message;
+            }
+
+            return View("~/Views/Index.cshtml", new { posts = response.body });
+        } finally {
+            connectionManager.CloseConnection(connection);
+        }
     }
 
     [HttpGet("/About")]

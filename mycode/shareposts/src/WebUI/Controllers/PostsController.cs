@@ -28,10 +28,6 @@ public class PostsController : Controller
             body = Request.Form["body"]
         };
 
-        Console.WriteLine("AuthUserId: " + userId);
-        Console.WriteLine("Title: " + newPost.title);
-        Console.WriteLine("Body: " + newPost.body);
-
         var connectionManager = new ConnectionManager();
         IDbConnection? connection = null;
         try {

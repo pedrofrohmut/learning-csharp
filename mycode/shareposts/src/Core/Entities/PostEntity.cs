@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Shareposts.Core.DataAccess;
+using Shareposts.Core.Dtos.Db;
 using Shareposts.Core.Dtos.UseCases;
 using Shareposts.Core.Exceptions;
 
@@ -44,5 +46,10 @@ public static class PostEntity
     public static async Task CreatePost(CreatePostDto newPost, Guid userId, IPostsDataAccess postsDataAccess)
     {
         await postsDataAccess.CreatePost(newPost, userId);
+    }
+
+    public static async Task<List<PostDbDto>> ListPosts(IPostsDataAccess postsDataAccess)
+    {
+        return await postsDataAccess.FindAllPosts();
     }
 }

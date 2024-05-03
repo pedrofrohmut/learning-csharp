@@ -25,4 +25,10 @@ public static class PostsWebAdapter
             throw;
         }
     }
+
+    public static async Task<AdaptedWebResponse> ListPosts(ListPostsUseCase useCase)
+    {
+        var posts = await useCase.Execute();
+        return new AdaptedWebResponse() { statusCode = 200, body = posts };
+    }
 }

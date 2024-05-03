@@ -45,7 +45,7 @@ public class UsersDataAccess : IUsersDataAccess
         if (userRow == null) {
             return null;
         }
-        return MapUserRowToDto(userRow);
+        return this.MapUserRowToDto(userRow);
     }
 
     public async Task CreateUser(CreateUserDto newUser, string passwordHash)
