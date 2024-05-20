@@ -53,4 +53,25 @@ public class PostsDataAccess : IPostsDataAccess
         var posts = this.MapPostRowsToDtos(rows);
         return posts;
     }
+
+    public async Task<List<PostWithUserDbDto>> FindAllPostsWithAuthor()
+    {
+        var sql = "SELECT posts.id, posts.title, posts.body, posts.created_at, posts.user_id, users.name " +
+                  "FROM posts JOIN users ON users.id = posts.user_id";
+        var rows = await this.connection.QueryAsync(sql);
+
+        var posts = new List<PostWithUserDbDto>();
+        foreach (dynamic row in rows) {
+            var post = new PostWithUserDbDto() {
+                id = row.id.ToString(),
+                title = row.title,
+                body = row.body,
+                createdAt = row.created_at,
+                authorId = row.user_id.ToString(),
+                authorName = row.name
+            };
+            posts.Add(post);
+        }
+        return posts;
+    }
 }

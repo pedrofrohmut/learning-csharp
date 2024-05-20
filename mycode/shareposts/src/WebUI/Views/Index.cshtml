@@ -1,4 +1,25 @@
+@using Shareposts.Core.Dtos.ViewModels
+@using System.Collections.Generic
+
+@model dynamic
+
 @{
   ViewData["Title"] = "Home";
 }
+@{
+  var posts = (List<PostViewModel>) @Model.posts;
+}
+
 <h1>Hello, Shareposts MVC!</h1>
+
+@if (@posts == null) {
+  <p>Post are null</p>
+} else {
+  @foreach (var post in @posts) {
+    <div class="post-container">
+      <p>@post.title</p>
+      <p>@post.body</p>
+      <p>@post.authorName</p>
+    </div>
+  }
+}

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Shareposts.Core.DataAccess;
 using Shareposts.Core.Dtos.Db;
 using Shareposts.Core.Dtos.UseCases;
+using Shareposts.Core.Dtos.ViewModels;
 using Shareposts.Core.Exceptions;
 
 namespace Shareposts.Core.Entities;
@@ -51,5 +52,24 @@ public static class PostEntity
     public static async Task<List<PostDbDto>> ListPosts(IPostsDataAccess postsDataAccess)
     {
         return await postsDataAccess.FindAllPosts();
+    }
+
+    public static async Task<List<PostViewModel>> ListPostsWithAuthor(IPostsDataAccess postsDataAccess)
+    {
+        var postsDb = await postsDataAccess.FindAllPostsWithAuthor();
+
+        var posts = new List<PostViewModel>();
+        foreach (var postDb in postsDb) {
+            var post = new PostViewModel() {
+                id = postDb.id,
+                title = postDb.title,
+                body = postDb.body,
+                createdAt = postDb.createdAt,
+                authorId = postDb.authorId,
+                authorName = postDb.authorName,
+            };
+            posts.Add(post);
+        }
+        return posts;
     }
 }
