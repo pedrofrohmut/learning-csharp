@@ -1,3 +1,8 @@
+@{
+  string? authCookie = Context.Request.Cookies["authToken"];
+  bool hasAuthCookie = !string.IsNullOrWhiteSpace(authCookie);
+}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -38,26 +43,31 @@
           </li>
 
           <!-- User -->
-          <li>
-            <a href="/Users/SignIn">Sign In</a>
-          </li>
-          <li>
-            <a href="/Users/SignUp">Sign Up</a>
-          </li>
-          <li>
-            <a href="/Users/SignOut">Sign Out</a>
-          </li>
+          @if (@hasAuthCookie) {
+            <li>
+              <a href="/Users/SignOut">Sign Out</a>
+            </li>
+          } else {
+            <li>
+              <a href="/Users/SignIn">Sign In</a>
+            </li>
+            <li>
+              <a href="/Users/SignUp">Sign Up</a>
+            </li>
+          }
 
           <!-- Posts -->
-          <li>
-            <a href="/Posts/Show/123">Show Post 123</a>
-          </li>
-          <li>
-            <a href="/Posts/Add">Add Post</a>
-          </li>
-          <li>
-            <a href="/Posts/Edit/123">Edit Post</a>
-          </li>
+          @if (@hasAuthCookie) {
+            <li>
+              <a href="/Posts/Show/123">Show Post 123</a>
+            </li>
+            <li>
+              <a href="/Posts/Add">Add Post</a>
+            </li>
+            <li>
+              <a href="/Posts/Edit/123">Edit Post</a>
+            </li>
+          }
         </ul>
       </nav>
     </aside>
