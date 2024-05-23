@@ -10,16 +10,23 @@
   var posts = (List<PostViewModel>) @Model.posts;
 }
 
-<h1>Hello, Shareposts MVC!</h1>
+<div class="page-container">
+  <h1 class="page-title">Hello, Shareposts MVC!</h1>
 
-@if (@posts == null) {
-  <p>Post are null</p>
-} else {
-  @foreach (var post in @posts) {
-    <div class="post-container">
-      <p>@post.title</p>
-      <p>@post.body</p>
-      <p>@post.authorName</p>
+  @if (@posts == null) {
+    <p>Post are null</p>
+  } else {
+    <div class="post-list-container">
+      @foreach (var post in @posts) {
+        <div class="post-container">
+          <p class="post-container__header">
+            <span class="post-container__title">@post.title</span>
+            <span class="post-container__author">by @post.authorName</span>
+            <span class="post-container__date">on @post.createdAt</span>
+          </p>
+          <p class="post-container__body">@post.body</p>
+        </div>
+      }
     </div>
   }
-}
+</div>

@@ -31,9 +31,10 @@
   <body>
 
     <!-- Header and Navbar -->
-    <aside>
-      <h1>Shareposts</h1>
-      <nav>
+    <header class="page-header page-container">
+      <h1 class="page-header__logo">Shareposts</h1>
+
+      <nav class="page-header__nav">
         <ul>
           <li>
             <a href="/">Home</a>
@@ -59,18 +60,21 @@
           <!-- Posts -->
           @if (@hasAuthCookie) {
             <li>
-              <a href="/Posts/Show/123">Show Post 123</a>
+              <a href="/Posts/CurrentUser">My Posts</a>
             </li>
-            <li>
-              <a href="/Posts/Add">Add Post</a>
-            </li>
-            <li>
-              <a href="/Posts/Edit/123">Edit Post</a>
-            </li>
+            <!-- <li> -->
+            <!--   <a href="/Posts/Show/123">Show Post 123</a> -->
+            <!-- </li> -->
+            <!-- <li> -->
+            <!--   <a href="/Posts/Add">Add Post</a> -->
+            <!-- </li> -->
+            <!-- <li> -->
+            <!--   <a href="/Posts/Edit/123">Edit Post</a> -->
+            <!-- </li> -->
           }
         </ul>
       </nav>
-    </aside>
+    </header>
 
     <!-- Insert Messages Partial -->
     @await Html.PartialAsync("~/Views/Shared/_MessagesPartial.cshtml")

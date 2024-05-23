@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Shareposts.Core.Adapters.Web;
+using Shareposts.Core.Dtos.ViewModels;
 using Shareposts.Core.UseCases.Posts;
 using Shareposts.DataAccess;
 using Shareposts.Utils;
@@ -80,11 +82,26 @@ public class PagesController : Controller
         return View("~/Views/SignUpUser.cshtml");
     }
 
-    [HttpGet("/Posts/Show/{id}")]
-    public IActionResult ShowPostPage(string id)
+    // [HttpGet("/Posts/Show/{id}")]
+    // public IActionResult ShowPostPage(string id)
+    // {
+    //     SetMessagesToViewData();
+    //     return View("~/Views/ShowPost.cshtml");
+    // }
+
+    [HttpGet("/Posts/CurrentUser")]
+    public IActionResult CurrentUserPostsPage()
     {
+        var (isAuthenticated, action, controller) =
+            ControllerUtils.IsAuthenticatedOrRedirect(Request, TempData);
+        if (! isAuthenticated) {
+            return RedirectToAction(action, controller);
+        }
+
         SetMessagesToViewData();
-        return View("~/Views/ShowPost.cshtml");
+
+        List<PostViewModel>? posts = null;
+        return View("~/Views/CurrentUserPosts.cshtml", new { posts });
     }
 
     [HttpGet("/Posts/Add")]

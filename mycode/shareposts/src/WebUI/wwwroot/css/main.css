@@ -9,3 +9,71 @@ html, body {
     height: 100%;
     width: 100%;
 }
+
+.page-header {
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 4em;
+    font-size: 1.2rem;
+}
+
+.page-header__nav ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2em;
+    list-style: none;
+}
+
+.page-container {
+    width: min(calc(100vw - 2rem), 800px);
+    margin-inline: auto;
+}
+
+.page-title {
+    font-size: 1.3rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* Post Container at Index Page */
+
+.post-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.post-container {
+    padding: 0.5rem;
+    max-width: 500px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 12px 1px #ccc;
+}
+
+.post-container__header,
+.post-container__body {
+    padding: 0.4rem;
+}
+
+.post-container__header {
+    border-bottom: 1px solid #ccc;
+}
+
+.post-container__title {
+    color: #444;
+    font-weight: 600;
+}
+
+.post-container__author {
+    color: #888;
+}
+
+.post-container__date {
+    color: #888;
+}
+
+.post-container__body {
+    font-size: 1rem;
+}

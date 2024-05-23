@@ -1,0 +1,18 @@
+@using Shareposts.Core.Dtos.ViewModels
+@using System.Collections.Generic
+
+@model dynamic
+
+@{
+  ViewData["Title"] = "Current User Posts";
+}
+
+@{
+  var posts = (List<PostViewModel>) @Model.posts;
+}
+
+<a href="/Posts/Add">
+  <button>Add Post</button>
+</a>
+
+<h1>Here are the Current User Posts</h1>
