@@ -1,3 +1,21 @@
+:root {
+    --border-radius: 5px;
+
+    --clr-neutral-200: #323232;
+    --clr-neutral-700: #cbcbcb;
+    --clr-neutral-800: #d5d5d5;
+    --clr-neutral-900: #e3e3e3;
+
+    /* Font Sizes */
+    --fs-extra-small: 0.7rem;
+    --fs-small: 0.85rem;
+    --fs-regular: 1.0rem;
+    --fs-large: 1.15rem;
+    --fs-extra-large: 1.3rem;
+}
+
+/* General Rules */
+
 *, *::after, *::before {
     font-size: inherit;
     margin: 0;
@@ -10,12 +28,24 @@ html, body {
     width: 100%;
 }
 
+button {
+    font-size: var(--fs-regular);
+    padding: 0.3em 1.0em;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--clr-neutral-700);
+    background-color: var(--clr-neutral-200);
+    color: var(--clr-neutral-800);
+    cursor: pointer;
+}
+
+/* Page Styles */
+
 .page-header {
     padding: 1rem 0;
     display: flex;
     align-items: center;
     gap: 4em;
-    font-size: 1.2rem;
+    font-size: var(--fs-large);
 }
 
 .page-header__nav ul {
@@ -32,7 +62,7 @@ html, body {
 }
 
 .page-title {
-    font-size: 1.3rem;
+    font-size: var(--fs-extra-large);
     margin-top: 1rem;
     margin-bottom: 2rem;
 }
@@ -75,5 +105,5 @@ html, body {
 }
 
 .post-container__body {
-    font-size: 1rem;
+    font-size: var(--fs-regular);
 }

@@ -11,8 +11,27 @@
   var posts = (List<PostViewModel>) @Model.posts;
 }
 
-<a href="/Posts/Add">
-  <button>Add Post</button>
-</a>
+<div class="page-container">
+  <a href="/Posts/Add">
+    <button>Add Post</button>
+  </a>
 
-<h1>Here are the Current User Posts</h1>
+  <h1 class="page-title">My Posts</h1>
+
+  @if (@posts == null) {
+    <p>No posts to display</p>
+  } else {
+    <div class="post-list-container">
+      @foreach (var post in @posts) {
+        <div class="post-container">
+          <p class="post-container__header">
+            <span class="post-container__title">@post.title</span>
+            <span class="post-container__author">by @post.authorName</span>
+            <span class="post-container__date">on @post.createdAt</span>
+          </p>
+          <p class="post-container__body">@post.body</p>
+        </div>
+      }
+    </div>
+  }
+</div>
