@@ -54,24 +54,38 @@ public class PostsDataAccess : IPostsDataAccess
         return posts;
     }
 
+    private List<PostWithUserDbDto> MapDynamicToPostWithUserDbDto(IEnumerable<dynamic>? rows)
+    {
+        var posts = new List<PostWithUserDbDto>();
+        if (rows != null) {
+            foreach (dynamic row in rows) {
+                var post = new PostWithUserDbDto() {
+                    id = row.id.ToString(),
+                       title = row.title,
+                       body = row.body,
+                       createdAt = row.created_at,
+                       authorId = row.user_id.ToString(),
+                       authorName = row.name
+                };
+                posts.Add(post);
+            }
+        }
+        return posts;
+    }
+
     public async Task<List<PostWithUserDbDto>> FindAllPostsWithAuthor()
     {
         var sql = "SELECT posts.id, posts.title, posts.body, posts.created_at, posts.user_id, users.name " +
                   "FROM posts JOIN users ON users.id = posts.user_id";
         var rows = await this.connection.QueryAsync(sql);
+        return MapDynamicToPostWithUserDbDto(rows);
+    }
 
-        var posts = new List<PostWithUserDbDto>();
-        foreach (dynamic row in rows) {
-            var post = new PostWithUserDbDto() {
-                id = row.id.ToString(),
-                title = row.title,
-                body = row.body,
-                createdAt = row.created_at,
-                authorId = row.user_id.ToString(),
-                authorName = row.name
-            };
-            posts.Add(post);
-        }
-        return posts;
+    public async Task<List<PostWithUserDbDto>> FindAllPostsWithAuthorByUserId(Guid userId)
+    {
+        var sql = "SELECT posts.id, posts.title, posts.body, posts.created_at, posts.user_id, users.name " +
+                  "FROM posts JOIN users ON users.id = posts.user_id WHERE posts.user_id = @UserId";
+        var rows = await this.connection.QueryAsync(sql, new { @UserId = userId });
+        return MapDynamicToPostWithUserDbDto(rows);
     }
 }

@@ -33,30 +33,42 @@ public class JwtService : IJwtService
         return Task.FromResult(token);
     }
 
-    public Task<(bool, string)> ValidateToken(string token)
+    private TokenValidationPolicy GetValidationPolicy()
     {
         var signinKey = SymmetricJwk.FromBase64Url(this.secret);
 
-        var policy =
-            new TokenValidationPolicyBuilder()
-                .RequireSignatureByDefault(signinKey, SignatureAlgorithm.HS256)
-                .RequireClaim("userId")
-                .RequireClaim("exp")
-                .Build();
+        return new TokenValidationPolicyBuilder()
+            .RequireSignatureByDefault(signinKey, SignatureAlgorithm.HS256)
+            .RequireClaim("userId")
+            .RequireClaim("exp")
+            .Build();
+    }
 
+
+    public Task<(bool, string)> ValidateToken(string token)
+    {
+        var policy = GetValidationPolicy();
         var ok = Jwt.TryParse(token, policy, out var decoded);
-        if (! ok) {
-            return Task.FromResult((false, ""));
-        }
+        if (! ok) return Task.FromResult((false, ""));
 
         string? userId = decoded.Payload?["userId"].ToString();
+        decoded.Dispose(); // Don't forget to dispose decoded or you get GC problems
+
         if (userId == null) {
             return Task.FromResult((false, ""));
         }
-
-        // Don't forget to dispose decoded or you get GC problems
-        decoded.Dispose();
-
         return Task.FromResult((true, userId));
+    }
+
+    public Task<string?> GetUserIdFromToken(string token)
+    {
+        var policy = GetValidationPolicy();
+        var ok = Jwt.TryParse(token, policy, out var decoded);
+        if (! ok) return Task.FromResult<string?>(null);
+
+        string? userId = decoded.Payload?["userId"].ToString();
+        decoded.Dispose(); // Don't forget to dispose decoded or you get GC problems
+
+        return Task.FromResult(userId);
     }
 }

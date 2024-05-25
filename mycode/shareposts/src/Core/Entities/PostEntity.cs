@@ -54,10 +54,8 @@ public static class PostEntity
         return await postsDataAccess.FindAllPosts();
     }
 
-    public static async Task<List<PostViewModel>> ListPostsWithAuthor(IPostsDataAccess postsDataAccess)
+    private static List<PostViewModel> MapPostWithUserDbDtoToPostViewModel(List<PostWithUserDbDto> postsDb)
     {
-        var postsDb = await postsDataAccess.FindAllPostsWithAuthor();
-
         var posts = new List<PostViewModel>();
         foreach (var postDb in postsDb) {
             var post = new PostViewModel() {
@@ -71,5 +69,17 @@ public static class PostEntity
             posts.Add(post);
         }
         return posts;
+    }
+
+    public static async Task<List<PostViewModel>> ListPostsWithAuthor(IPostsDataAccess postsDataAccess)
+    {
+        var postsDb = await postsDataAccess.FindAllPostsWithAuthor();
+        return MapPostWithUserDbDtoToPostViewModel(postsDb);
+    }
+
+    public static async Task<List<PostViewModel>> ListPostsWithAuthorByUserId(Guid userId, IPostsDataAccess postsDataAccess)
+    {
+        var postsDb = await postsDataAccess.FindAllPostsWithAuthorByUserId(userId);
+        return MapPostWithUserDbDtoToPostViewModel(postsDb);
     }
 }

@@ -11,4 +11,5 @@ public interface IPostsDataAccess
     Task CreatePost(CreatePostDto newPost, Guid userId);
     Task<List<PostDbDto>> FindAllPosts();
     Task<List<PostWithUserDbDto>> FindAllPostsWithAuthor();
+    Task<List<PostWithUserDbDto>> FindAllPostsWithAuthorByUserId(Guid userId);
 }

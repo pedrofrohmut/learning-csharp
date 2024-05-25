@@ -31,4 +31,17 @@ public static class PostsWebAdapter
         var posts = await useCase.Execute();
         return new AdaptedWebResponse() { statusCode = 200, body = posts };
     }
+
+    public static async Task<AdaptedWebResponse> ListCurrentUserPosts(ListCurrentUserPostsUseCase useCase, string? userId)
+    {
+        try {
+            var posts = await useCase.Execute(userId);
+            return new AdaptedWebResponse() { statusCode = 200, body = posts };
+        } catch (Exception e) {
+            if (e is UserValidationException || e is UserNotFoundException) {
+                return new AdaptedWebResponse() { statusCode = 403, message = e.Message };
+            }
+            throw;
+        }
+    }
 }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Shareposts.Utils;
 using Shareposts.Services;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Shareposts.Core.Services;
 
 namespace Shareposts.WebUI.Utils;
 
@@ -61,5 +62,12 @@ public static class ControllerUtils
             return (false, "HomePage", "Pages");
         }
         return (true, null, null);
+    }
+
+    public static async Task<string?> GetAuthUserIdFromRequest(HttpRequest request, IJwtService jwtService)
+    {
+        var token = request.Cookies["authToken"];
+        if (token == null) return null;
+        return await jwtService.GetUserIdFromToken(token);
     }
 }

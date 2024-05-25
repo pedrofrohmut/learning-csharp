@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Shareposts.Core.Adapters.Web;
-using Shareposts.Core.Dtos.ViewModels;
 using Shareposts.Core.UseCases.Posts;
 using Shareposts.DataAccess;
+using Shareposts.Services;
 using Shareposts.Utils;
 using Shareposts.WebUI.Utils;
 
@@ -90,7 +89,7 @@ public class PagesController : Controller
     // }
 
     [HttpGet("/Posts/CurrentUser")]
-    public IActionResult CurrentUserPostsPage()
+    public async Task<IActionResult> CurrentUserPostsPage()
     {
         var (isAuthenticated, action, controller) =
             ControllerUtils.IsAuthenticatedOrRedirect(Request, TempData);
@@ -100,8 +99,31 @@ public class PagesController : Controller
 
         SetMessagesToViewData();
 
-        List<PostViewModel>? posts = null;
-        return View("~/Views/CurrentUserPosts.cshtml", new { posts });
+        var connectionManager = new ConnectionManager();
+        IDbConnection? connection = null;
+        try {
+            var connectionString = EnvUtils.GetConnectionString();
+            connection = connectionManager.GetConnection(connectionString);
+            connectionManager.OpenConnection(connection);
+
+            var usersDataAccess = new UsersDataAccess(connection);
+            var postsDataAccess = new PostsDataAccess(connection);
+            var listCurrentUserPostsUseCase = new ListCurrentUserPostsUseCase(usersDataAccess, postsDataAccess);
+
+            var jwtSecret = EnvUtils.GetJwtSecret();
+            var jwtService = new JwtService(jwtSecret);
+            var authUserId = await ControllerUtils.GetAuthUserIdFromRequest(Request, jwtService);
+
+            var response = await PostsWebAdapter.ListCurrentUserPosts(listCurrentUserPostsUseCase, authUserId);
+
+            if (response.statusCode != 200) {
+                ViewData["errorMessage"] = response.message;
+            }
+
+            return View("~/Views/CurrentUserPosts.cshtml", new { posts = response.body });
+        } finally {
+            connectionManager.CloseConnection(connection);
+        }
     }
 
     [HttpGet("/Posts/Add")]
