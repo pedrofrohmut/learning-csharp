@@ -12,7 +12,7 @@ using WhiteLagoon.Infrastructure.Data;
 namespace WhiteLagoon.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250917170927_Initial")]
+    [Migration("20250917182650_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -29,38 +29,48 @@ namespace WhiteLagoon.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("Created_At")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
+                    b.Property<string>("Image_Url")
+                        .HasColumnType("text")
+                        .HasColumnName("image_url");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<int>("Occupancy")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("occupancy");
 
                     b.Property<double>("Price")
-                        .HasColumnType("double precision");
+                        .HasColumnType("double precision")
+                        .HasColumnName("price");
 
                     b.Property<int>("Sqft")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("sqft");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("Updated_At")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_villas");
 
-                    b.ToTable("Villas");
+                    b.ToTable("villas", (string)null);
                 });
 #pragma warning restore 612, 618
         }
