@@ -18,13 +18,15 @@
       </div>
     </div>
 
-    <table class="table table-bordered table-dark table-striped">
+    <table class="villas-table table table-bordered table-dark table-striped">
       <thead>
         <tr>
-          <td>Name</td>
-          <td>Price</td>
-          <td>Sqft</td>
-          <td>Occupancy</td>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Sqft</th>
+          <th>Occupancy</th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -35,6 +37,16 @@
             <td>@villa.Price</td>
             <td>@villa.Sqft</td>
             <td>@villa.Occupancy</td>
+            <td>
+              <a asp-controller="Villas" asp-action="Update" asp-route-villaId="@villa.Id" class="btn btn-success">
+                <i class="bi bi-pencil-square"></i> Edit
+              </a>
+            </td>
+            <td>
+              <a asp-controller="Villas" asp-action="Delete" asp-route-villaId="@villa.Id" class="btn btn-danger">
+                <i class="bi bi-trash-fill"></i> Delete
+              </a>
+            </td>
           </tr>
         }
       </tbody>

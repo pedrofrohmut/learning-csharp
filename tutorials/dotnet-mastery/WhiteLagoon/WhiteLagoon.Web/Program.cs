@@ -7,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    // var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    var connectionString = "Host=localhost;Port=5106;database=postgres;username=postgres;password=password";
     options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
 });
 

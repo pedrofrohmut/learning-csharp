@@ -14,7 +14,9 @@
   <div class="card-body border-0 p-4">
 
     <!-- AspFor property bind the value of the input to the Model in this case is the Entity.Villa -->
-    <form class="forms row p-3" method="post">
+    <form class="forms row p-3" method="post" asp-controller="Villas" asp-action="Create">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
       <div class="form-floating col-12">
         <input asp-for="@Model.Name" class="form-control border shadow" />
         <label asp-for="Name" class="ms-2 mt-1">Name</label>
@@ -69,3 +71,14 @@
   </div>
 
 </div>
+
+
+@*
+    This stuff adds javascript validation for client side validation (Some jquery
+    scafolded scripts)
+*@
+@section Scripts {
+  @{
+    <partial name="_ValidationScriptsPartial"/>
+  }
+}

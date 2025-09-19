@@ -1,0 +1,80 @@
+<!-- AspNetCore auto generates an instance of Villa to be used here -->
+@model WhiteLagoon.Domain.Entities.Villa
+
+<div class="w-100 card border-0 p-4">
+
+  <div class="card-header bg-success bg-gradient ml-0 py-3">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="text-white py-2">Delete Villa</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body border-0 p-4">
+
+    <!-- AspFor property bind the value of the input to the Model in this case is the Entity.Villa -->
+    <form class="forms row p-3" method="post" asp-controller="Villas" asp-action="Delete">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+      <input type="hidden" asp-for="@Model.Id" />
+
+      <div class="form-floating col-12">
+        <input asp-for="@Model.Name" class="form-control border shadow" disabled/>
+        <label asp-for="Name" class="ms-2 mt-1">Name</label>
+      </div>
+
+      <div class="form-floating col-12">
+        <input asp-for="@Model.Description" class="form-control border shadow" disabled/>
+        <label asp-for="Description" class="ms-2 mt-1">Description</label>
+      </div>
+
+      <div class="form-floating col-12">
+        <input asp-for="@Model.Price" class="form-control border shadow" disabled/>
+        <label asp-for="Price" class="ms-2 mt-1">Price</label>
+      </div>
+
+      <div class="form-floating col-12">
+        <input asp-for="@Model.Sqft" class="form-control border shadow" disabled/>
+        <label asp-for="Sqft" class="ms-2 mt-1">Square Feet</label>
+      </div>
+
+      <div class="form-floating col-12">
+        <input asp-for="@Model.Occupancy" class="form-control border shadow" disabled/>
+        <label asp-for="Occupancy" class="ms-2 mt-1">Occupancy</label>
+      </div>
+
+      <div class="form-floating col-12">
+        <input asp-for="@Model.ImageUrl" class="form-control border shadow pt-4" disabled/>
+        <label asp-for="ImageUrl" class="ms-2 mt-1">Image Url</label>
+      </div>
+
+      <div class="row">
+        <div class="col-6 col-md-3">
+          <button type="submit" class="btn btn-danger py-2 w-100">
+            <i class="bi bi-trash-fill"></i> Delete
+          </button>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <a asp-controller="Villas" asp-action="Index" class="btn btn-secondary w-100">
+            <i class="bi bi-x-circle"></i> Cancel
+          </a>
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+</div>
+
+
+@*
+    This stuff adds javascript validation for client side validation (Some jquery
+    scafolded scripts)
+*@
+@section Scripts {
+  @{
+    <partial name="_ValidationScriptsPartial"/>
+  }
+}
