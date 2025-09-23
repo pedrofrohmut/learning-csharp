@@ -9,3 +9,6 @@
 - [EFCore Docs](https://learn.microsoft.com/en-us/ef/core/)
 - [PostgreSQL Docker](https://postgres.guide/docs/getting-started/)
 - [AspNet TagHelpers](https://learn.microsoft.com/en-us/aspnet/core/mvc/views/working-with-forms?view=aspnetcore-8.0)
+- [Dotnet TempData](https://dotnettutorials.net/lesson/tempdata-in-asp-net-core-mvc/)
+- [Codeseven Toaster](https://github.com/CodeSeven/toastr)
+- [Toastr + Dotnet](https://dev.to/azizularif/implementing-toastr-notifications-in-aspnet-mvc-a-step-by-step-guide-for-enhanced-user-experience-emi)

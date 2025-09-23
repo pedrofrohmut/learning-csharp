@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WhiteLagoon.Infrastructure.Data;
@@ -11,9 +12,11 @@ using WhiteLagoon.Infrastructure.Data;
 namespace WhiteLagoon.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250922171408_AddedVillaNumbers")]
+    partial class AddedVillaNumbers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,16 +129,16 @@ namespace WhiteLagoon.Infrastructure.Migrations
                         .HasColumnName("villa_id");
 
                     b.HasKey("Id")
-                        .HasName("pk_villa_numbers");
+                        .HasName("pk_villas_numbers");
 
                     b.HasIndex("Number")
                         .IsUnique()
-                        .HasDatabaseName("ix_villa_numbers_number");
+                        .HasDatabaseName("ix_villas_numbers_number");
 
                     b.HasIndex("VillaId")
-                        .HasDatabaseName("ix_villa_numbers_villa_id");
+                        .HasDatabaseName("ix_villas_numbers_villa_id");
 
-                    b.ToTable("villa_numbers", (string)null);
+                    b.ToTable("villas_numbers", (string)null);
 
                     b.HasData(
                         new
@@ -201,7 +204,7 @@ namespace WhiteLagoon.Infrastructure.Migrations
                         .HasForeignKey("VillaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_villa_numbers_villas_villa_id");
+                        .HasConstraintName("fk_villas_numbers_villas_villa_id");
 
                     b.Navigation("Villa");
                 });

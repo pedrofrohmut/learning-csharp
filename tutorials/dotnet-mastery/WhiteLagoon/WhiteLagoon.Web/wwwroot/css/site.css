@@ -58,7 +58,8 @@ body {
     gap: 1.2rem;
 }
 
-.forms .form-control {
+.forms .form-control,
+.forms .form-select {
     height: 70px;
 }
 

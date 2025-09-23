@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WhiteLagoon.Domain.Entities;
 
+[Table("villas")]
 public class Villa
 {
     [Key]

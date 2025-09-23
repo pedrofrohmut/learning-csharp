@@ -38,6 +38,7 @@ public class VillasController : Controller
         }
         this.dbContext.Add(villa);
         this.dbContext.SaveChanges();
+        TempData["success"] = "Villa was created successfully";
         return RedirectToAction("Index", "Villas");
     }
 
@@ -46,6 +47,7 @@ public class VillasController : Controller
     {
         var villa = this.dbContext.Villas?.FirstOrDefault(x => x.Id == villaId);
         if (villa == null) {
+            TempData["error"] = "Villa not found with this id";
             return RedirectToAction("Error", "Home");
         }
         return View(villa);
@@ -61,8 +63,13 @@ public class VillasController : Controller
         if (!ModelState.IsValid) {
             return View();
         }
+        if (updatedVilla.Id == 0) {
+            TempData["error"] = "There is no id for the villa. Could not update model";
+            return RedirectToAction("Error", "Home");
+        }
         this.dbContext.Update(updatedVilla);
         this.dbContext.SaveChanges();
+        TempData["success"] = "The villa was updated successfully";
         return RedirectToAction("Index", "Villas");
     }
 
@@ -71,6 +78,7 @@ public class VillasController : Controller
     {
         var villa = this.dbContext.Villas?.FirstOrDefault(x => x.Id == villaId);
         if (villa == null) {
+            TempData["error"] = "Villa not found with this id";
             return RedirectToAction("Error", "Home");
         }
         return View(villa);
@@ -80,12 +88,9 @@ public class VillasController : Controller
     [HttpPost]
     public IActionResult Delete(Villa villaToDelete)
     {
-        var villa = this.dbContext.Villas?.FirstOrDefault(x => x.Id == villaToDelete.Id);
-        if (villa == null) {
-            return RedirectToAction("Error", "Home");
-        }
-        this.dbContext.Villas?.Remove(villa);
+        this.dbContext.Villas?.Remove(villaToDelete);
         this.dbContext.SaveChanges();
+        TempData["success"] = "The villas was deleted successfully";
         return RedirectToAction("Index", "Villas");
     }
 }
