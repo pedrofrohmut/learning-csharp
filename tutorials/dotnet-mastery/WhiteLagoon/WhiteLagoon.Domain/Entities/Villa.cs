@@ -10,7 +10,7 @@ public class Villa
     public int Id { get; set; }
 
     [MaxLength(50)]
-    public required string Name { get; set; }
+    public string Name { get; set; }
 
     [MaxLength(250)]
     public string? Description { get; set; }

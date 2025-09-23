@@ -1,4 +1,6 @@
 using WhiteLagoon.Infrastructure.Data;
+using WhiteLagoon.Infrastructure.Repositories;
+using WhiteLagoon.Application.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
     var connectionString = "Host=localhost;Port=5106;database=postgres;username=postgres;password=password";
     options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
 });
+
+builder.Services.AddScoped<IVillaRepository, VillaRepository>();
 
 var app = builder.Build();
 
