@@ -1,0 +1,63 @@
+<!-- AspNetCore auto generates an instance of Villa to be used here -->
+@model WhiteLagoon.Web.Controllers.DeleteVillaNumberModel;
+
+<div class="w-100 card border-0 p-4">
+
+  <div class="card-header bg-success bg-gradient ml-0 py-3">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="text-white py-2">Delete Villa Number</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body border-0 p-4">
+
+    <!-- AspFor property bind the value of the input to the Model in this case is the Entity.Villa -->
+    <form class="forms row p-3" method="post" asp-controller="VillaNumbers" asp-action="Delete">
+      <input asp-for="@Model.Id" type="hidden" />
+
+      <div class="form-floating col-12">
+        <input type="text" asp-for="@Model.Number" class="form-control border shadow" disabled/>
+        <label class="ms-2 mt-1">Villa Number</label>
+      </div>
+
+      <div class="form-floating col-12">
+        <input type="text" asp-for="@Model.SpecialDetails" class="form-control border shadow" disabled/>
+        <label class="ms-2 mt-1">Special Details</label>
+      </div>
+
+      <div class="form-floating col-12">
+        <input type="text" asp-for="@Model.VillaName" class="form-control border shadow" disabled/>
+        <label class="ms-2 mt-1">Villa Name</label>
+     </div>
+
+      <div class="row">
+        <div class="col-6 col-md-3">
+          <button type="submit" class="btn btn-danger py-2 w-100">
+            <i class="bi bi-trash-fill"></i> Delete
+          </button>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <a asp-controller="VillaNumbers" asp-action="Index" class="btn btn-secondary w-100">
+            <i class="bi bi-x-circle"></i> Cancel
+          </a>
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+</div>
+
+
+@*
+    This stuff adds javascript validation for client side validation (Some jquery
+    scafolded scripts)
+*@
+@section Scripts {
+  @{
+    <partial name="_ValidationScriptsPartial"/>
+  }
+}

@@ -36,12 +36,14 @@
             <td>@villaNumber.Number</td>
             <td>@villaNumber.SpecialDetails</td>
             <td>
-              <a asp-controller="VillaNumbers" asp-action="Update" asp-route-villaId="@villaNumber.Id" class="btn btn-success">
+              <a asp-controller="VillaNumbers" asp-action="Update"
+                 asp-route-villaNumberId="@villaNumber.Id" class="btn btn-success">
                 <i class="bi bi-pencil-square"></i> Edit
               </a>
             </td>
             <td>
-              <a asp-controller="VillaNumbers" asp-action="Delete" asp-route-villaId="@villaNumber.Id" class="btn btn-danger">
+              <a asp-controller="VillaNumbers" asp-action="Delete"
+                 asp-route-villaNumberId="@villaNumber.Id" class="btn btn-danger">
                 <i class="bi bi-trash-fill"></i> Delete
               </a>
             </td>
