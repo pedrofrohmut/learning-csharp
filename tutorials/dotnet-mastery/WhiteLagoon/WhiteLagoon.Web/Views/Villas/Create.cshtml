@@ -14,7 +14,7 @@
   <div class="card-body border-0 p-4">
 
     <!-- AspFor property bind the value of the input to the Model in this case is the Entity.Villa -->
-    <form class="forms row p-3" method="post" asp-controller="Villas" asp-action="Create">
+    <form class="forms row p-3" method="post" asp-controller="Villas" asp-action="Create" enctype="multipart/form-data">
       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
       <div class="form-floating col-12">
@@ -48,8 +48,9 @@
       </div>
 
       <div class="form-floating col-12">
-        <input asp-for="@Model.ImageUrl" class="form-control border shadow pt-4" />
-        <label asp-for="ImageUrl" class="ms-2 mt-1">Image Url</label>
+        <input type="hidden" asp-for="@Model.ImageUrl" />
+        <input asp-for="Image" class="form-control border shadow pt-4" />
+        <label asp-for="ImageUrl" class="ms-2 mt-1">Image</label>
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
       </div>
 

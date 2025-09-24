@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 
 namespace WhiteLagoon.Domain.Entities;
 
@@ -25,6 +26,9 @@ public class Villa
 
     [Column("image_url")]
     public string? ImageUrl { get; set; }
+
+    [NotMapped]
+    public IFormFile? Image { get; set; }
 
     [Column("created_at")]
     public DateTime? CreatedAt { get; set; }

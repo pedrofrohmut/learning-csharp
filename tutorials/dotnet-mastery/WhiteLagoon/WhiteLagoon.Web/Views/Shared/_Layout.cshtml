@@ -72,6 +72,13 @@
       </script>
     }
 
+    @if (TempData["debug"] != null)
+    {
+      <script type="text/javascript">
+        toastr.info('@TempData["debug"]', '', { timeOut: 5000 });
+      </script>
+    }
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" />
 
     @await RenderSectionAsync("Scripts", required: false)
