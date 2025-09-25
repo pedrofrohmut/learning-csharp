@@ -35,7 +35,7 @@ public class VillaRepository : IVillaRepository
 
     public void Remove(int villaId)
     {
-        this.dbContext.Remove(new Villa { Id = villaId });
+        this.dbContext.Remove(new Villa { Id = villaId, Name = "" });
     }
 
     public void Save()

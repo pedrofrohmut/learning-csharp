@@ -1,0 +1,51 @@
+@model IEnumerable<WhiteLagoon.Domain.Entities.Amenity>
+
+<div class="w-100 card border-0 mt-4">
+  <div class="card-header bg-success bg-gradient ml-0 py-3">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="text-white py-2">Amenities List</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body bg-dark border-0 p-4">
+    <div class="row pb-3">
+      <div class="col-6 offset-6 text-end">
+        <a asp-controller="Amenities" asp-action="Create" class="btn btn-secondary">
+          <i class="bi bi-plus-circle pe-2"></i> Create New Amenity
+        </a>
+      </div>
+    </div>
+
+    <table class="villas-table table table-bordered table-dark table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var amenity in Model)
+        {
+          <tr>
+            <td>@amenity.Name</td>
+            <td>@amenity.Description</td>
+            <td>
+              <a asp-controller="Amenities" asp-action="Update" asp-route-amenityId="@amenity.Id" class="btn btn-success">
+                <i class="bi bi-pencil-square"></i> Edit
+              </a>
+            </td>
+            <td>
+              <a asp-controller="Amenities" asp-action="Delete" asp-route-amenityId="@amenity.Id" class="btn btn-danger">
+                <i class="bi bi-trash-fill"></i> Delete
+              </a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

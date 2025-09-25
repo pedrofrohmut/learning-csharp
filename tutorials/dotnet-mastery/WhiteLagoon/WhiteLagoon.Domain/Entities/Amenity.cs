@@ -1,17 +1,19 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace WhiteLagoon.Domain.Entities;
 
-[Table("villa_numbers")]
-[Index(nameof(Number), IsUnique=true)]
-public class VillaNumber
+[Table("amenities")]
+public class Amenity
 {
     [Key]
     public int Id { get; set; }
-    public required int Number { get; set; }
-    public string? SpecialDetails { get; set; }
+
+    [MaxLength(50)]
+    public required string Name { get; set; }
+
+    [MaxLength(250)]
+    public string? Description { get; set; }
 
     [ForeignKey("Villas")]
     public int VillaId { get; set; }

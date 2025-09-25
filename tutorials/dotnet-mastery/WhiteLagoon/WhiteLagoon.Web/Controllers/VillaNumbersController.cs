@@ -15,14 +15,14 @@ public class VillaModel
 
 public class CreateVillaNumberModel
 {
-    public VillaNumber VillaNumber { get; set; } = new VillaNumber();
+    public VillaNumber VillaNumber { get; set; } = new VillaNumber { Number = 0 };
     public List<VillaModel> Villas { get; set; } = new List<VillaModel>();
 }
 
 public class UpdateVillaNumberModel
 {
     public int OldVillaNumber { get; set; }
-    public VillaNumber VillaNumber { get; set; } = new VillaNumber();
+    public VillaNumber VillaNumber { get; set; } = new VillaNumber() { Number = 0 };
     public List<VillaModel> OtherVillas { get; set; } = new List<VillaModel>();
 }
 
@@ -55,7 +55,7 @@ public class VillaNumbersController : Controller
     {
         var villas = this.dbContext.Villas.Select(x => new VillaModel { Id = x.Id, Name = x.Name }).ToList();
         var viewModel = new CreateVillaNumberModel {
-            VillaNumber = new VillaNumber(),
+            VillaNumber = new VillaNumber() { Number = 0 },
             Villas = villas ?? new List<VillaModel>(),
         };
         return View(viewModel);
@@ -164,7 +164,7 @@ public class VillaNumbersController : Controller
             return RedirectToAction("Index", "VillaNumbers");
         }
 
-        this.dbContext.VillaNumbers.Remove(new VillaNumber { Id = model.Id });
+        this.dbContext.VillaNumbers.Remove(new VillaNumber { Id = model.Id, Number = 0 });
         this.dbContext.SaveChanges();
         TempData["success"] = "The villa number was deleted successfully";
         return RedirectToAction("Index", "VillaNumbers");
