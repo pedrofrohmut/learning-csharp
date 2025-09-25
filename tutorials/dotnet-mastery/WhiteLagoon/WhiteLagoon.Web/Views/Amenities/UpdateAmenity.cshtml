@@ -1,0 +1,60 @@
+@model WhiteLagoon.Web.Controllers.UpdateAmenityModel;
+
+<div class="w-100 card border-0 p-4">
+
+  <div class="card-header bg-success bg-gradient ml-0 py-3">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="text-white py-2">Update Amenity</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body border-0 p-4">
+
+    <form class="forms row p-3" method="post" asp-controller="Amenities" asp-action="Update">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+      <input type="hidden" asp-for="@Model.Id" />
+
+      <div class="form-floating col-12">
+        <input asp-for="@Model.Name" class="form-control border shadow" />
+        <label asp-for="Name" class="ms-2 mt-1">Name</label>
+        <span asp-validation-for="Name" class="text-danger"></span>
+      </div>
+
+      <div class="form-floating col-12">
+        <input asp-for="@Model.Description" class="form-control border shadow" />
+        <label asp-for="Description" class="ms-2 mt-1">Description</label>
+        <span asp-validation-for="Description" class="text-danger"></span>
+      </div>
+
+      <div class="form-floating col-12">
+        <select asp-for="@Model.VillaId" class="form-select border shadow">
+          <option selected value="@Model.VillaId">@Model.VillaName</option>
+          @foreach (var otherVilla in Model.OtherVillas)
+          {
+            <option value="@otherVilla.Id">@otherVilla.Name</option>
+          }
+        </select>
+        <label class="ms-2 mt-1">Villa</label>
+      </div>
+
+      <div class="row">
+        <div class="col-6 col-md-3">
+          <button type="submit" class="btn btn-primary py-2 w-100">
+            <i class="bi bi-check-circle"></i> Submit
+          </button>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <a asp-controller="Amenities" asp-action="Index" class="btn btn-secondary w-100">
+            <i class="bi bi-x-circle"></i> Cancel
+          </a>
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+</div>
