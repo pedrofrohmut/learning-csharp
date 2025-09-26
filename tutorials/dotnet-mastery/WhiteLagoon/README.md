@@ -15,3 +15,4 @@
 - [HotReload - Runtime Compilation](https://learn.microsoft.com/en-us/aspnet/core/mvc/views/view-compilation?view=aspnetcore-8.0&tabs=visual-studio)
 - [SnakeCase EFCore](https://github.com/efcore/EFCore.NamingConventions)
 - [ModelValidation](https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=net-8.0)
+- [CSHTML Partials](https://learn.microsoft.com/en-us/aspnet/core/mvc/views/partial?view=aspnetcore-8.0)

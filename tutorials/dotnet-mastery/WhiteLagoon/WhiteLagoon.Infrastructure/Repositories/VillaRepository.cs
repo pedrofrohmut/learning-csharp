@@ -1,6 +1,7 @@
 using WhiteLagoon.Application.Repositories;
 using WhiteLagoon.Domain.Entities;
 using WhiteLagoon.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace WhiteLagoon.Infrastructure.Repositories;
 
@@ -15,7 +16,7 @@ public class VillaRepository : IVillaRepository
 
     public IEnumerable<Villa> FindAll()
     {
-        return this.dbContext.Villas.ToList();
+        return this.dbContext.Villas.Include(x => x.Amenities).ToList();
     }
 
     public Villa? FindById(int villaId)

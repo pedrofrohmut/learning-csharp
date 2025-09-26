@@ -35,4 +35,9 @@ public class Villa
 
     [Column("updated_at")]
     public DateTime? UpdatedAt { get; set; }
+
+    public IEnumerable<Amenity> Amenities { get; set; } = new List<Amenity>();
+
+    [NotMapped]
+    public bool IsAvailable { get; set; }
 }

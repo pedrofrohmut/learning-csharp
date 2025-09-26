@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WhiteLagoon.Web</title>
+    <title>WhiteLagoon</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
@@ -17,7 +17,7 @@
   </head>
   <body>
     <header>
-      <nav class="layout__navbar navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+      <nav class="layout__navbar navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow">
         <div class="container">
           <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
             <img alt="" src="~/images/resort.png" height="35"/>
@@ -49,7 +49,7 @@
       </nav>
     </header>
 
-    <main role="main" class="layout__main-content container">
+    <main role="main" class="layout__main-content">
       @RenderBody()
     </main>
 

@@ -30,6 +30,13 @@ public class UpdateAmenityModel
     public IEnumerable<Villa> OtherVillas = new List<Villa>();
 }
 
+public class DeleteAmenityModel {
+    public int Id { get; set; }
+    public string Name { get; set; } = "";
+    public string Description { get; set; } = "";
+    public string VillaName { get; set; } = "";
+}
+
 public class AmenitiesController : Controller
 {
     private readonly ApplicationDbContext dbContext;
@@ -128,7 +135,13 @@ public class AmenitiesController : Controller
         if (amenity == null || amenity.Villa == null) {
             return RedirectToAction("Error", "Home");
         }
-        return View("DeleteAmenity", amenity);
+        var model = new DeleteAmenityModel {
+            Id = amenity.Id,
+            Name = amenity.Name,
+            Description = amenity.Description ?? "",
+            VillaName = amenity.Villa?.Name ?? "",
+        };
+        return View("DeleteAmenity", model);
     }
 
     [HttpPost]
