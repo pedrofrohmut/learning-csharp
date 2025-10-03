@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 public class GetOrderByIdQueryHandler : IQueryHandler<GetOrderByIdQuery, OrderDto?>
 {
-    private readonly ApplicationDbContext dbContext;
+    private readonly ReadDbContext dbContext;
     private readonly IValidator<GetOrderByIdQuery> validator;
 
-    public GetOrderByIdQueryHandler(ApplicationDbContext dbContext, IValidator<GetOrderByIdQuery> validator)
+    public GetOrderByIdQueryHandler(ReadDbContext dbContext, IValidator<GetOrderByIdQuery> validator)
     {
         this.dbContext = dbContext;
         this.validator = validator;

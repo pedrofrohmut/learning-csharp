@@ -7,17 +7,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace OrdersApi.Migrations
+namespace OrdersApi.Migrations.Write
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250930203743_Initial")]
-    partial class Initial
+    [DbContext(typeof(WriteDbContext))]
+    [Migration("20251003201714_WriteDbInitial")]
+    partial class WriteDbInitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.12");
 
             modelBuilder.Entity("Order", b =>
                 {

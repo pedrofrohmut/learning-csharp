@@ -2,14 +2,9 @@ using Microsoft.EntityFrameworkCore;
 
 public class GetAllOrdersQueryHandler : IQueryHandler<NoQuery, List<OrderDto>>
 {
-    // public static async Task<List<Order>> Handle(ApplicationDbContext dbContext)
-    // {
-    //     return await dbContext.Orders.ToListAsync();
-    // }
+    private readonly ReadDbContext dbContext;
 
-    private readonly ApplicationDbContext dbContext;
-
-    public GetAllOrdersQueryHandler(ApplicationDbContext dbContext)
+    public GetAllOrdersQueryHandler(ReadDbContext dbContext)
     {
         this.dbContext = dbContext;
     }
