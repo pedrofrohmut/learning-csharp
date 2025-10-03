@@ -21,6 +21,8 @@ builder.Services.AddScoped<IQueryHandler<NoQuery, List<OrderDto>>, GetAllOrdersQ
 // Get order summaries
 builder.Services.AddScoped<IQueryHandler<NoQuery, List<OrderSummaryDto>>, GetOrderSummariesQueryHandler>();
 
+builder.Services.AddSingleton<IEventPublisher, ConsoleEventPublisher>();
+
 var app = builder.Build();
 
 app.MapPost("/api/orders", async (HttpContext httpContext,
