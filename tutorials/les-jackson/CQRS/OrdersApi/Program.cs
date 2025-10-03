@@ -18,6 +18,9 @@ builder.Services.AddScoped<IValidator<GetOrderByIdQuery>, GetOrderByIdQueryValid
 // Get all orders query
 builder.Services.AddScoped<IQueryHandler<NoQuery, List<OrderDto>>, GetAllOrdersQueryHandler>();
 
+// Get order summaries
+builder.Services.AddScoped<IQueryHandler<NoQuery, List<OrderSummaryDto>>, GetOrderSummariesQueryHandler>();
+
 var app = builder.Build();
 
 app.MapPost("/api/orders", async (HttpContext httpContext,
@@ -64,6 +67,14 @@ app.MapGet("/api/orders/{orderId}", async (HttpContext httpContext,
 
     httpContext.Response.StatusCode = 200;
     await httpContext.Response.WriteAsJsonAsync(order);
+});
+
+app.MapGet("/api/orders/summaries", async (HttpContext httpContext,
+                                           IQueryHandler<NoQuery, List<OrderSummaryDto>> handler) =>
+{
+    List<OrderSummaryDto> summaries = await handler.HandleAsync(new NoQuery());
+    httpContext.Response.StatusCode = 200;
+    await httpContext.Response.WriteAsJsonAsync(summaries);
 });
 
 app.MapFallback(async (HttpContext httpContext) =>
