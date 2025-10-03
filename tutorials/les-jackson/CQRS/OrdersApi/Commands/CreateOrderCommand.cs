@@ -1,9 +1,7 @@
-// public record CreateOrderCommand(string firstName, string lastName, string status, decimal totalCost);
-
-public class CreateOrderCommand
+public readonly struct CreateOrderCommand
 {
-    public string FirstName { get; set; } = "";
-    public string LastName { get; set; } = "";
-    public string Status { get; set; } = "";
-    public decimal TotalCost;
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
+    public string Status { get; init; }
+    public decimal TotalCost { get; init; }
 }

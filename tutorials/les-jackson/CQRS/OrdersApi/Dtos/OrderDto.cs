@@ -7,12 +7,3 @@ public readonly struct OrderDto
     public decimal TotalCost { get; init; }
     public DateTime CreatedAt { get; init; }
 }
-
-// public record OrderDto(
-//     int Id,
-//     string FirstName,
-//     string LastName,
-//     string Status,
-//     decimal TotalCost,
-//     DateTime CreatedAt
-// );

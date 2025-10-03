@@ -1,6 +1,4 @@
-// public record GetOrderByIdQuery(int orderId);
-
-public class GetOrderByIdQuery
+public readonly struct GetOrderByIdQuery
 {
-    public int orderId;
+    public int OrderId { get; init; }
 }

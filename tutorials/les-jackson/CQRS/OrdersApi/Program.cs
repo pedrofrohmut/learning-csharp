@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,11 +7,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.UseSqlite(builder.Configuration.GetConnectionString("BaseConnection"));
 });
 
-// Commands
+// Create order command
 builder.Services.AddScoped<ICommandHandler<CreateOrderCommand>, CreateOrderCommandHandler>();
+builder.Services.AddScoped<IValidator<CreateOrderCommand>, CreateOrderCommandValidator>();
 
-// Queries
+// Get order by id query
 builder.Services.AddScoped<IQueryHandler<GetOrderByIdQuery, OrderDto?>, GetOrderByIdQueryHandler>();
+builder.Services.AddScoped<IValidator<GetOrderByIdQuery>, GetOrderByIdQueryValidator>();
+
+// Get all orders query
 builder.Services.AddScoped<IQueryHandler<NoQuery, List<OrderDto>>, GetAllOrdersQueryHandler>();
 
 var app = builder.Build();
@@ -19,9 +24,15 @@ app.MapPost("/api/orders", async (HttpContext httpContext,
                                   ICommandHandler<CreateOrderCommand> handler,
                                   CreateOrderCommand reqBody) =>
 {
-    await handler.HandleAsync(reqBody);
-    httpContext.Response.StatusCode = 201;
-    await httpContext.Response.WriteAsync("");
+    try {
+        await handler.HandleAsync(reqBody);
+        httpContext.Response.StatusCode = 201;
+        await httpContext.Response.WriteAsync("");
+    } catch (ValidationException e) {
+        var errors = e.Errors.Select(x => new { x.PropertyName, x.ErrorMessage });
+        httpContext.Response.StatusCode = 400;
+        await httpContext.Response.WriteAsJsonAsync(errors);
+    }
 });
 
 app.MapGet("/api/orders", async (HttpContext httpContext, IQueryHandler<NoQuery, List<OrderDto>> handler) =>
@@ -35,7 +46,15 @@ app.MapGet("/api/orders/{orderId}", async (HttpContext httpContext,
                                            IQueryHandler<GetOrderByIdQuery, OrderDto?> handler,
                                            int orderId) =>
 {
-    OrderDto? order = await handler.HandleAsync(new GetOrderByIdQuery { orderId = orderId });
+    OrderDto? order = null;
+    try {
+        order = await handler.HandleAsync(new GetOrderByIdQuery { OrderId = orderId });
+    } catch (ValidationException e) {
+        var errors = e.Errors.Select(x => new { x.PropertyName, x.ErrorMessage });
+        httpContext.Response.StatusCode = 400;
+        await httpContext.Response.WriteAsJsonAsync(errors);
+        return;
+    }
 
     if (order == null) {
         httpContext.Response.StatusCode = 400;
