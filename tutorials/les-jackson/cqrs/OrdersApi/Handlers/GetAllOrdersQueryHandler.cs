@@ -1,6 +1,9 @@
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-public class GetAllOrdersQueryHandler : IQueryHandler<NoQuery, List<OrderDto>>
+public readonly struct GetAllOrdersQuery : IRequest<List<OrderDto>> {};
+
+public class GetAllOrdersQueryHandler : IRequestHandler<GetAllOrdersQuery, List<OrderDto>>
 {
     private readonly ReadDbContext dbContext;
 
@@ -9,9 +12,11 @@ public class GetAllOrdersQueryHandler : IQueryHandler<NoQuery, List<OrderDto>>
         this.dbContext = dbContext;
     }
 
-    public async Task<List<OrderDto>> HandleAsync(NoQuery query)
+    public async Task<List<OrderDto>> Handle(GetAllOrdersQuery _, CancellationToken cancellationToken)
     {
-        return await this.dbContext.Orders
+        return await this.dbContext
+            .Orders
+            .AsNoTracking()
             .Select(x => new OrderDto {
                 Id = x.Id,
                 FirstName = x.FirstName,

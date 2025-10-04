@@ -1,4 +1,6 @@
-public readonly struct CreateOrderCommand
+using MediatR;
+
+public readonly struct CreateOrderCommand : IRequest
 {
     public string FirstName { get; init; }
     public string LastName { get; init; }

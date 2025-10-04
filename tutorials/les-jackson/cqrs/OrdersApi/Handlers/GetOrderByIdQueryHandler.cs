@@ -1,7 +1,8 @@
 using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-public class GetOrderByIdQueryHandler : IQueryHandler<GetOrderByIdQuery, OrderDto?>
+public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderDto?>
 {
     private readonly ReadDbContext dbContext;
     private readonly IValidator<GetOrderByIdQuery> validator;
@@ -12,14 +13,15 @@ public class GetOrderByIdQueryHandler : IQueryHandler<GetOrderByIdQuery, OrderDt
         this.validator = validator;
     }
 
-    public async Task<OrderDto?> HandleAsync(GetOrderByIdQuery query)
+    public async Task<OrderDto?> Handle(GetOrderByIdQuery query, CancellationToken cancellationToken)
     {
         var validationResult = await this.validator.ValidateAsync(query);
         if (!validationResult.IsValid) {
             throw new ValidationException(validationResult.Errors);
         }
 
-        Order? order = await dbContext.Orders.FirstOrDefaultAsync(x => x.Id == query.OrderId);
+        // AsNoTracking is for read-only scenarios
+        Order? order = await dbContext.Orders.AsNoTracking().FirstOrDefaultAsync(x => x.Id == query.OrderId);
 
         if (order == null) return null;
 

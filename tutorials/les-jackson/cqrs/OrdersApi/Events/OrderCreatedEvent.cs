@@ -1,4 +1,6 @@
-public readonly struct OrderCreatedEvent
+using MediatR;
+
+public readonly struct OrderCreatedEvent : INotification
 {
     public int OrderId { get; init; }
     public string FirstName { get; init; }

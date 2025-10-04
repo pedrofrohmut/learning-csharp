@@ -1,5 +1,6 @@
+using MediatR;
 
-public class OrderCreatedProjectionHandler : IEventHandler<OrderCreatedEvent>
+public class OrderCreatedProjectionHandler : INotificationHandler<OrderCreatedEvent>
 {
     private readonly ReadDbContext dbContext;
 
@@ -8,18 +9,18 @@ public class OrderCreatedProjectionHandler : IEventHandler<OrderCreatedEvent>
         this.dbContext = dbContext;
     }
 
-    public async Task HandleAsync(OrderCreatedEvent evt)
+    public async Task Handle(OrderCreatedEvent notification, CancellationToken cancellationToken)
     {
         var order = new Order {
-            Id = evt.OrderId,
-            FirstName = evt.FirstName,
-            LastName = evt.LastName,
+            Id = notification.OrderId,
+            FirstName = notification.FirstName,
+            LastName = notification.LastName,
             Status = "Created",
             CreatedAt = DateTime.UtcNow,
-            TotalCost = evt.TotalCost,
+            TotalCost = notification.TotalCost,
         };
 
-        await this.dbContext.Orders.AddAsync(order);
-        await this.dbContext.SaveChangesAsync();
+        await this.dbContext.Orders.AddAsync(order, cancellationToken);
+        await this.dbContext.SaveChangesAsync(cancellationToken);
     }
 }

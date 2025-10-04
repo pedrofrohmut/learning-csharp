@@ -1,4 +1,6 @@
-public readonly struct GetOrderByIdQuery
+using MediatR;
+
+public readonly struct GetOrderByIdQuery : IRequest<OrderDto?>
 {
     public int OrderId { get; init; }
 }

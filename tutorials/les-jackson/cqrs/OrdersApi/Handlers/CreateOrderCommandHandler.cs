@@ -1,23 +1,24 @@
 using FluentValidation;
+using MediatR;
 
-public class CreateOrderCommandHandler : ICommandHandler<CreateOrderCommand>
+public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand>
 {
     private readonly WriteDbContext dbContext;
     private readonly IValidator<CreateOrderCommand> validator;
-    private readonly IEventPublisher eventPublisher;
+    private readonly IMediator mediator;
 
     public CreateOrderCommandHandler(WriteDbContext dbContext,
                                      IValidator<CreateOrderCommand> validator,
-                                     IEventPublisher eventPublisher)
+                                     IMediator mediator)
     {
         this.dbContext = dbContext;
         this.validator = validator;
-        this.eventPublisher = eventPublisher;
+        this.mediator = mediator;
     }
 
-    public async Task HandleAsync(CreateOrderCommand command)
+    public async Task Handle(CreateOrderCommand command, CancellationToken cancellationToken)
     {
-        var validationResult = await this.validator.ValidateAsync(command);
+        var validationResult = await this.validator.ValidateAsync(command, cancellationToken);
         if (!validationResult.IsValid) {
             throw new ValidationException(validationResult.Errors);
         }
@@ -30,10 +31,12 @@ public class CreateOrderCommandHandler : ICommandHandler<CreateOrderCommand>
             TotalCost = command.TotalCost,
         };
 
-        await dbContext.AddAsync(order);
-        await dbContext.SaveChangesAsync();
+        await dbContext.AddAsync(order, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
 
-        await eventPublisher.PublishAsync(new OrderCreatedEvent {
+        Console.WriteLine($"ID: {order.Id}");
+
+        await this.mediator.Publish(new OrderCreatedEvent {
              OrderId = order.Id,
              FirstName = order.FirstName,
              LastName = order.LastName,
